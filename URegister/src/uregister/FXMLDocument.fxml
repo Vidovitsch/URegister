@@ -1,14 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" prefHeight="200" prefWidth="320" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uregister.FXMLDocumentController">
-    <children>
-        <Button layoutX="126" layoutY="90" text="Click Me!" onAction="#handleButtonAction" fx:id="button" />
-        <Label layoutX="126" layoutY="120" minHeight="16" minWidth="69" fx:id="label" />
-    </children>
-</AnchorPane>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uregister.FXMLDocumentController">
+   <children>
+      <Button fx:id="ButtonExportCurrentList" layoutX="581.0" layoutY="429.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="241.0" text="Export current list" />
+      <Button fx:id="ButtonUpdateSalary" layoutX="591.0" layoutY="47.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="241.0" text="Update" />
+      <TextField fx:id="TextFieldSalary" layoutX="683.0" layoutY="14.0" promptText="0.00" />
+      <Label layoutX="588.0" layoutY="18.0" text="Salary per hour:" />
+      <Label layoutX="588.0" layoutY="87.0" text="Selected registration">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="590.0" layoutY="188.0" text="End" />
+      <Label layoutX="589.0" layoutY="155.0" text="Start" />
+      <TextField fx:id="TextFieldSelectedRegistrationEndTime" layoutX="641.0" layoutY="184.0" prefHeight="25.0" prefWidth="173.0" />
+      <TextField fx:id="TextFieldSelectedRegistrationStartTime" layoutX="641.0" layoutY="151.0" prefHeight="25.0" prefWidth="173.0" />
+      <DatePicker fx:id="DatePickerSelectedRegistrationDate" layoutX="585.0" layoutY="114.0" prefHeight="25.0" prefWidth="228.0" />
+      <Label layoutX="17.0" layoutY="429.0" text="Period:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="LabelRegistrationsDate11" layoutX="238.0" layoutY="460.0" text="Till" />
+      <DatePicker fx:id="DatePickerTillDayFilter" layoutX="264.0" layoutY="456.0" prefHeight="25.0" prefWidth="154.0" />
+      <DatePicker fx:id="DatePickerFromDayFilter" layoutX="52.0" layoutY="456.0" prefHeight="25.0" prefWidth="154.0" />
+      <Label fx:id="LabelRegistrationsDate1" layoutX="18.0" layoutY="460.0" text="From" />
+      <ComboBox fx:id="ComboBoxMonthFilter" layoutX="236.0" layoutY="393.0" prefHeight="25.0" prefWidth="120.0" />
+      <ComboBox fx:id="ComboBoxYearFilter" layoutX="50.0" layoutY="393.0" prefHeight="25.0" prefWidth="128.0" />
+      <Label layoutX="18.0" layoutY="397.0" text="Year" />
+      <Label layoutX="189.0" layoutY="397.0" text="Month" />
+      <Label fx:id="LabelFilters" layoutX="16.0" layoutY="364.0" text="Filters">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="LabelRegistrationsDate" layoutX="370.0" layoutY="397.0" text="Date" />
+      <Label fx:id="LabelRegistrationsHeader" layoutX="20.0" layoutY="78.0" text="Registrations">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextArea fx:id="TextAreaSelectedRegistrationDescription" layoutX="587.0" layoutY="219.0" prefHeight="113.0" prefWidth="228.0" />
+      <Button fx:id="ButtonDeleteSelectedRegistration" layoutX="714.0" layoutY="339.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Delete" />
+      <Button fx:id="ButtonUpdateSelectedRegistration" layoutX="587.0" layoutY="339.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Update" />
+      <DatePicker fx:id="DatePickerDayFilter" layoutX="412.0" layoutY="393.0" prefHeight="25.0" prefWidth="154.0" />
+      <Label fx:id="LabelElapsedTime" layoutX="370.0" layoutY="22.0" text="Elapsed time: 0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Label>
+      <Pane fx:id="PaneWorkDescription" layoutX="286.0" layoutY="72.0" prefHeight="216.0" prefWidth="256.0" visible="false">
+         <children>
+            <TextArea fx:id="TextAreaNewRegistrationDescription" layoutX="14.0" layoutY="39.0" prefHeight="136.0" prefWidth="228.0" />
+            <Button fx:id="ButtonSubmitNewRegistrationDescription" layoutX="16.0" layoutY="183.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="228.0" text="Submit" />
+            <Label fx:id="LabelDescriptionTitle" layoutX="14.0" layoutY="6.0" text="What dit you work on?">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Button fx:id="ButtonFinishWork" layoutX="189.0" layoutY="18.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="140.0" text="Finish working" />
+      <Button fx:id="ButtonStartWork" layoutX="14.0" layoutY="18.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="149.0" text="Start working" />
+      <ListView fx:id="ListViewRegistrations" layoutX="18.0" layoutY="114.0" prefHeight="250.0" prefWidth="557.0" />
+   </children>
+</Pane>
