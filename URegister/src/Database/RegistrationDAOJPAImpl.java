@@ -36,7 +36,7 @@ public class RegistrationDAOJPAImpl implements RegistrationDAO {
 
     @Override
     public void delete(Registration reg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.remove(reg);
     }
 
     @Override
