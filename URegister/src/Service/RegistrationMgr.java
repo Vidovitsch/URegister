@@ -77,20 +77,13 @@ public class RegistrationMgr {
     public List<Registration> findByDateSpan(Date start, Date end) {
         List<Registration> registrations = new ArrayList();
         Date varDate = start;
-        long diff = new Formatter().getDateDiff(start, end, TimeUnit.DAYS);
+        long diff = new Utility().getDateDiff(start, end, TimeUnit.DAYS);
         for (int i = 0; i < diff; i++) {
             registrations.addAll(findBySingleDate(varDate));
-            varDate = addDayToDate(varDate);
+            varDate = new Utility().addDayToDate(varDate);
         }
         
         return registrations;
-    }
-    
-    private Date addDayToDate(Date date) {
-        Calendar c = Calendar.getInstance(); 
-        c.setTime(date); 
-        c.add(Calendar.DATE, 1);
-        return (Date) c.getTime();
     }
     
     //Dummy method
