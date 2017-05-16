@@ -5,6 +5,8 @@
  */
 package uregister;
 
+import Service.RegistrationMgr;
+import java.sql.Date;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,6 +27,9 @@ public class URegister extends Application {
         
         stage.setScene(scene);
         stage.show();
+        
+        RegistrationMgr regMgr = new RegistrationMgr();
+        System.out.println(regMgr.findBySingleDate(new Date(1212, 12, 12)).get(0));
     }
 
     /**
