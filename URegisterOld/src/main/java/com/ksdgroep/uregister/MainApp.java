@@ -1,5 +1,7 @@
 package com.ksdgroep.uregister;
 
+import Service.TimeManager;
+import domain.Registratie;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +22,9 @@ public class MainApp extends Application {
         stage.setTitle("JavaFX and Maven");
         stage.setScene(scene);
         stage.show();
+        
+        TimeManager tm = new TimeManager(new Registratie());
+        tm.startTimer();
     }
 
     /**
