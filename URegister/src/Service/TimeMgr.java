@@ -12,6 +12,7 @@ import java.time.LocalTime;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
+import javafx.scene.control.Label;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
@@ -32,12 +33,16 @@ public class TimeMgr {
         return formatSeconds(seconds);
     }
     
-    public boolean startTimer() {
+    public String getStartTime() {
+        return this.start;
+    }
+    
+    public boolean startTimer(Label lbl) {
         if (timer != null) {
             start = getCurrentTime();
             return false;
         } else {
-            start();
+            start(lbl);
             return true;
         }
     }
@@ -51,13 +56,13 @@ public class TimeMgr {
         return elapsed;
     }
     
-    private void start() {
+    private void start(Label lbl) {
         timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 seconds++;
-                System.out.println(formatSeconds(seconds));
+                lbl.setText(formatSeconds(seconds));
             }
         }, 0, 1000);
     }
