@@ -45,7 +45,6 @@ public class FXMLDocumentController implements Initializable
     private boolean tillDateSet = false;
 
     @FXML
-     ;
     private Button ButtonStartWork;
 
     @FXML
