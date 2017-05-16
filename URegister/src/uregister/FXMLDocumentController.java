@@ -5,8 +5,22 @@
  */
 package uregister;
 
+import Model.TestModel;
 import java.net.URL;
+import java.text.DateFormatSymbols;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -82,20 +96,29 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private void handleButtonAction(ActionEvent event)
     {
-        System.out.println("You clicked me!");
+
+    }
+
+    @FXML
+    private void handleUpdateSalaryButton(ActionEvent event)
+    {
 
     }
 
     @FXML
     private void handleStartWorkButton(ActionEvent event)
     {
-
+        TestModel m = new TestModel();
+        m.setName("Testname");
+        addItemToList(ListViewRegistrations, m);
     }
 
     @FXML
     private void handleFinishWorkButton(ActionEvent event)
     {
-
+        TestModel m = new TestModel();
+        m.setName("Testname");
+        removeItemFromList(ListViewRegistrations, m);
     }
 
     public void updateElapsedTime(String timerText)
@@ -103,10 +126,75 @@ public class FXMLDocumentController implements Initializable
         LabelElapsedTime.setText("Elapsed time: " + timerText);
     }
 
+    public void fillList(ListView listview, ArrayList<String> stringlist)
+    {
+        ObservableList<String> doList = FXCollections.observableArrayList(stringlist);
+        listview.getItems().addAll(doList);
+    }
+
+    public void removeItemFromList(ListView listview, Object item)
+    {
+        listview.getItems().remove(item);
+    }
+
+    public void useYearFilter(String year)
+    {
+        int yearInt = Integer.parseInt(year);
+        //TODO filter registrationobject based on yearfilter
+    }
+
+    public void useMonthFilter(String month) throws ParseException
+    {
+        Date date;
+        date = new SimpleDateFormat("MMMM").parse(month);
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int monthInt = cal.get(Calendar.MONTH);
+        //TODO filter registrationobject based on yearfilter
+    }
+
+    public void addItemToList(ListView listview, Object item)
+    {
+        listview.getItems().add(item);
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
-        // TODO
+        ComboBoxYearFilter.getItems().addAll("2017", "2016", "2015", "2014", "2013");
+        ComboBoxYearFilter.setPromptText("year");
+        ComboBoxYearFilter.setEditable(false);
+        ComboBoxYearFilter.valueProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                useYearFilter(newValue);
+            }
+        });
+
+
+        String[] months = new DateFormatSymbols().getMonths();
+        for (int i = 0; i < months.length; i++)
+        {
+            ComboBoxMonthFilter.getItems().add(months[i]);
+        }
+        ComboBoxMonthFilter.setPromptText("month");
+        ComboBoxMonthFilter.setEditable(false);
+        ComboBoxMonthFilter.valueProperty().addListener(new ChangeListener<String>()
+        {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+            {
+                try
+                {
+                    useMonthFilter(newValue);
+                } catch (ParseException ex)
+                {
+                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
 
 }
