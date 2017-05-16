@@ -10,6 +10,7 @@ import java.net.URL;
 import java.text.DateFormatSymbols;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -22,6 +23,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -39,7 +41,11 @@ import javafx.scene.control.TextField;
 public class FXMLDocumentController implements Initializable
 {
 
+    private boolean fromDateSet = false;
+    private boolean tillDateSet = false;
+
     @FXML
+     ;
     private Button ButtonStartWork;
 
     @FXML
@@ -150,7 +156,23 @@ public class FXMLDocumentController implements Initializable
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
         int monthInt = cal.get(Calendar.MONTH);
-        //TODO filter registrationobject based on yearfilter
+        //TODO filter registrationobject based on monthfilter
+    }
+
+    public void useDateFilter(LocalDate date)
+    {
+        //TODO filter registrationobject based on datefilter
+        System.out.println(date);
+    }
+
+    private void setFromDay(LocalDate date)
+    {
+        System.out.println(date);
+    }
+
+    private void setTillDay(LocalDate date)
+    {
+        System.out.println(date);
     }
 
     public void addItemToList(ListView listview, Object item)
@@ -173,7 +195,6 @@ public class FXMLDocumentController implements Initializable
             }
         });
 
-
         String[] months = new DateFormatSymbols().getMonths();
         for (int i = 0; i < months.length; i++)
         {
@@ -195,6 +216,23 @@ public class FXMLDocumentController implements Initializable
                 }
             }
         });
-    }
 
+        DatePickerDayFilter.valueProperty().addListener((ov, oldValue, newValue)
+                -> 
+                {
+                    useDateFilter(newValue);
+        });
+
+        DatePickerFromDayFilter.valueProperty().addListener((ov, oldValue, newValue)
+                -> 
+                {
+                    setFromDay(newValue);
+        });
+
+        DatePickerTillDayFilter.valueProperty().addListener((ov, oldValue, newValue)
+                -> 
+                {
+                    setTillDay(newValue);
+        });
+    }
 }
