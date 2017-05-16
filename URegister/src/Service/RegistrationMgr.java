@@ -34,7 +34,7 @@ public class RegistrationMgr {
         regDAO = new RegistrationDAOJPAImpl(em);
         em.getTransaction().begin();
         try {
-            regDAO.create(createDummy());
+            regDAO.create(reg);
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();

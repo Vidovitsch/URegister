@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.effect.*?>
 <?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
@@ -51,15 +52,18 @@
       <Button fx:id="ButtonDeleteSelectedRegistration" layoutX="714.0" layoutY="339.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Delete" />
       <Button fx:id="ButtonUpdateSelectedRegistration" layoutX="587.0" layoutY="339.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Update" />
       <DatePicker fx:id="DatePickerDayFilter" layoutX="412.0" layoutY="393.0" prefHeight="25.0" prefWidth="154.0" />
-      <Label fx:id="LabelElapsedTime" layoutX="370.0" layoutY="22.0" text="Elapsed time: 0">
+      <Label fx:id="LabelElapsedTime" layoutX="343.0" layoutY="22.0" prefHeight="27.0" prefWidth="228.0" text="Elapsed time: 00:00:00">
          <font>
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <Pane fx:id="PaneWorkDescription" layoutX="286.0" layoutY="72.0" prefHeight="216.0" prefWidth="256.0" visible="false">
+      <Button fx:id="ButtonFinishWork" layoutX="189.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleFinishWorkButton" prefHeight="54.0" prefWidth="140.0" text="Finish working" />
+      <Button fx:id="ButtonStartWork" layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleStartWorkButton" prefHeight="54.0" prefWidth="149.0" text="Start working" />
+      <ListView fx:id="ListViewRegistrations" layoutX="8.0" layoutY="114.0" prefHeight="250.0" prefWidth="557.0" />
+      <Pane fx:id="PaneAddDescription" layoutX="286.0" layoutY="72.0" prefHeight="216.0" prefWidth="256.0" style="-fx-background-color: darkgrey;" visible="false">
          <children>
-            <TextArea fx:id="TextAreaNewRegistrationDescription" layoutX="14.0" layoutY="39.0" prefHeight="136.0" prefWidth="228.0" />
-            <Button fx:id="ButtonSubmitNewRegistrationDescription" layoutX="16.0" layoutY="183.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="228.0" text="Submit" />
+            <TextArea fx:id="textAreaNewRegistrationDescription" layoutX="14.0" layoutY="39.0" prefHeight="136.0" prefWidth="228.0" wrapText="true" />
+            <Button fx:id="buttonSubmitNewRegistration" layoutX="16.0" layoutY="183.0" mnemonicParsing="false" onAction="#handleSubmitRegistrationButton" prefHeight="25.0" prefWidth="228.0" text="Submit" />
             <Label fx:id="LabelDescriptionTitle" layoutX="14.0" layoutY="6.0" text="What dit you work on?">
                <font>
                   <Font size="18.0" />
@@ -67,8 +71,5 @@
             </Label>
          </children>
       </Pane>
-      <Button fx:id="ButtonFinishWork" layoutX="189.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleFinishWorkButton" prefHeight="54.0" prefWidth="140.0" text="Finish working" />
-      <Button fx:id="ButtonStartWork" layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleStartWorkButton" prefHeight="54.0" prefWidth="149.0" text="Start working" />
-      <ListView fx:id="ListViewRegistrations" layoutX="18.0" layoutY="114.0" prefHeight="250.0" prefWidth="557.0" />
    </children>
 </Pane>

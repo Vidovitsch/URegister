@@ -3,15 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/David/Documents/Projects/Java/URegister/URegister/src/META-INF/persistence.xml</file>
-            <file>file:/C:/Users/David/Documents/Projects/Java/URegister/URegister/src/Service/Utility.java</file>
-            <file>file:/C:/Users/David/Documents/Projects/Java/URegister/URegister/src/uregister/FXMLDocumentController.java</file>
-            <file>file:/C:/Users/David/Documents/Projects/Java/URegister/URegister/src/uregister/URegister.java</file>
-            <file>file:/C:/Users/David/Documents/Projects/Java/URegister/URegister/src/Service/RegistrationMgr.java</file>
-            <file>file:/C:/Users/David/Documents/Projects/Java/URegister/URegister/src/Model/Registration.java</file>
-            <file>file:/C:/Users/David/Documents/Projects/Java/URegister/URegister/src/Database/RegistrationDAOJPAImpl.java</file>
-            <file>file:/C:/Users/David/Documents/Projects/Java/URegister/URegister/src/Service/TimeMgr.java</file>
-            <file>file:/C:/Users/David/Documents/Projects/Java/URegister/URegister/src/Database/RegistrationDAO.java</file>
+            <file>file:/C:/GitHubProjects/URegister/URegister/src/uregister/FXMLDocumentController.java</file>
+            <file>file:/C:/GitHubProjects/URegister/URegister/src/Model/Registration.java</file>
+            <file>file:/C:/GitHubProjects/URegister/URegister/src/uregister/URegister.java</file>
+            <file>file:/C:/GitHubProjects/URegister/URegister/src/uregister/FXMLDocument.fxml</file>
+            <file>file:/C:/GitHubProjects/URegister/URegister/src/META-INF/persistence.xml</file>
+            <file>file:/C:/GitHubProjects/URegister/URegister/src/Service/RegistrationMgr.java</file>
+            <file>file:/C:/GitHubProjects/URegister/URegister/src/Model/TestModel.java</file>
         </group>
     </open-files>
 </project-private>
