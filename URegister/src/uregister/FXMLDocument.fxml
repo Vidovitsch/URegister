@@ -10,7 +10,7 @@
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uregister.FXMLDocumentController">
    <children>
       <Button fx:id="ButtonExportCurrentList" layoutX="581.0" layoutY="429.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="241.0" text="Export current list" />
-      <Button fx:id="ButtonUpdateSalary" layoutX="591.0" layoutY="47.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="241.0" text="Update" />
+      <Button fx:id="ButtonUpdateSalary" layoutX="591.0" layoutY="47.0" mnemonicParsing="false" onAction="#handleUpdateSalaryButton" prefHeight="25.0" prefWidth="241.0" text="Update" />
       <TextField fx:id="TextFieldSalary" layoutX="683.0" layoutY="14.0" promptText="0.00" />
       <Label layoutX="588.0" layoutY="18.0" text="Salary per hour:" />
       <Label layoutX="588.0" layoutY="87.0" text="Selected registration">
