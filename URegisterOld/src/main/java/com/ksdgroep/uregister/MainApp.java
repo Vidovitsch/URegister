@@ -1,5 +1,7 @@
 package com.ksdgroep.uregister;
 
+import Service.TimeManager;
+import domain.Registratie;
 import javafx.application.Application;
 import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
@@ -21,6 +23,9 @@ public class MainApp extends Application {
         stage.setScene(scene);
         stage.setTitle("URegister");
         stage.show();
+        
+        TimeManager tm = new TimeManager(new Registratie());
+        tm.startTimer();
     }
 
     /**
