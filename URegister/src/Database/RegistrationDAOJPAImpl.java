@@ -9,7 +9,10 @@ package Database;
 import Model.Registration;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaQuery;
 
 
 /**
@@ -36,16 +39,13 @@ public class RegistrationDAOJPAImpl implements RegistrationDAO {
 
     @Override
     public void delete(Registration reg) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        em.remove(reg);
     }
 
     @Override
-    public ArrayList<Registration> findByDate(Date date) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public ArrayList<Registration> findByDateSpan(Date start, Date end) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public List<Registration> findByDate(Date date) {
+        Query q = em.createNamedQuery("Account.findByDate", Registration.class);
+        q.setParameter("date", date);
+        return (List<Registration>) q.getResultList();
     }
 }
