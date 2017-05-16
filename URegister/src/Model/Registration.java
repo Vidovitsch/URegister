@@ -15,6 +15,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -23,10 +24,9 @@ import javax.persistence.NamedQuery;
  */
 
 @Entity
+@Table(name="Registration")
 @NamedQueries({
-    @NamedQuery(name = "Account.getAll", query = "select a from Account as a"),
-    @NamedQuery(name = "Account.count", query = "select count(a) from Account as a"),
-    @NamedQuery(name = "Account.findByAccountNr", query = "select a from Account as a where a.accountNr = :accountNr")
+    @NamedQuery(name = "Account.findByDate", query = "SELECT a FROM Registration AS a WHERE a.date = :date"),
 })
 public class Registration implements Serializable {
 

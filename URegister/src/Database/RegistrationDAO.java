@@ -9,6 +9,7 @@ package Database;
 import Model.Registration;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -42,13 +43,5 @@ public interface RegistrationDAO {
      * @param date
      * @return a list of entities
      */
-    ArrayList<Registration> findByDate(Date date);
-    
-    /**
-     * Searches for entities within a given date span
-     * @param start
-     * @param end
-     * @return a list of entities
-     */
-    ArrayList<Registration> findByDateSpan(Date start, Date end);
+    List<Registration> findByDate(Date date);
 }
