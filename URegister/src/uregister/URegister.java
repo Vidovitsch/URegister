@@ -29,6 +29,7 @@ public class URegister extends Application {
         stage.show();
         
         RegistrationMgr regMgr = new RegistrationMgr();
+        regMgr.createRegistration(null);
         System.out.println(regMgr.findBySingleDate(new Date(1212, 12, 12)).get(0));
     }
 
