@@ -36,7 +36,10 @@ public class Registration implements Serializable {
     private Date date;
     private Time start;
     private Time end;
+    private String content;
 
+    public Registration() { }
+    
     public Long getId() {
         return id;
     }
@@ -67,5 +70,13 @@ public class Registration implements Serializable {
 
     public void setEnd(Time end) {
         this.end = end;
+    }
+    
+    public String getContent() {
+        return this.content;
+    }
+    
+    public void setContent(String content) {
+        this.content = content;
     }
 }
