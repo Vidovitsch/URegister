@@ -39,9 +39,9 @@ public class TimeMgr {
     
     public boolean startTimer(Label lbl) {
         if (timer != null) {
-            start = getCurrentTime();
             return false;
         } else {
+            start = getCurrentTime();
             start(lbl);
             return true;
         }
