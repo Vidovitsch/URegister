@@ -64,6 +64,9 @@
                         </goals>
                         <configuration>
                             <excludeScope>system</excludeScope>
+                            <excludes>META-INF/*.SF</excludes>
+                            <excludes>META-INF/*.DSA</excludes>
+                            <excludes>META-INF/*.RSA</excludes>
                             <excludeGroupIds>junit,org.mockito,org.hamcrest</excludeGroupIds>
                             <outputDirectory>${project.build.directory}/classes</outputDirectory>
                         </configuration>
@@ -71,6 +74,7 @@
                 </executions>
             </plugin>
             <plugin>
+                
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.2.1</version>
@@ -84,6 +88,7 @@
                         </goals>
                         <configuration>
                             <executable>${java.home}/../bin/javafxpackager</executable>
+                            <mainClass>com.ksdgroep.uregister.MainApp</mainClass>
                             <arguments>
                                 <argument>-createjar</argument>
                                 <argument>-nocss2bin</argument>
@@ -96,6 +101,7 @@
                                 <argument>-outfile</argument>
                                 <argument>${project.build.finalName}.jar</argument>
                             </arguments>
+                            
                         </configuration>
                     </execution>
                     <execution>
