@@ -7,7 +7,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="498.0" prefWidth="839.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="uregister.FXMLDocumentController">
    <children>
       <Button fx:id="ButtonExportCurrentList" layoutX="581.0" layoutY="429.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="241.0" text="Export current list" />
@@ -68,8 +67,8 @@
             </Label>
          </children>
       </Pane>
-      <Button fx:id="ButtonFinishWork" layoutX="189.0" layoutY="18.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="140.0" text="Finish working" />
-      <Button fx:id="ButtonStartWork" layoutX="14.0" layoutY="18.0" mnemonicParsing="false" prefHeight="54.0" prefWidth="149.0" text="Start working" />
+      <Button fx:id="ButtonFinishWork" layoutX="189.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleFinishWorkButton" prefHeight="54.0" prefWidth="140.0" text="Finish working" />
+      <Button fx:id="ButtonStartWork" layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleStartWorkButton" prefHeight="54.0" prefWidth="149.0" text="Start working" />
       <ListView fx:id="ListViewRegistrations" layoutX="18.0" layoutY="114.0" prefHeight="250.0" prefWidth="557.0" />
    </children>
 </Pane>
