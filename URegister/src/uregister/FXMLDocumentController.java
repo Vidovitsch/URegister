@@ -6,6 +6,7 @@
 package uregister;
 
 import Model.Registration;
+import Service.ExportList;
 import Service.RegistrationMgr;
 import java.net.URL;
 import java.sql.Time;
@@ -74,6 +75,8 @@ public class FXMLDocumentController implements Initializable
     boolean ispaused = false;
     boolean isworking = false;
     Registration selectedRegistration = null;
+    List<Registration> regView;
+    List<Registration> allRegistrations;
 
     @FXML
     private Button ButtonStartWork;
@@ -150,6 +153,24 @@ public class FXMLDocumentController implements Initializable
 
     }
 
+    @FXML
+    private void handleExportCurrentListButton(ActionEvent event)
+    {
+        setCurrentListData();
+        ExportList e = new ExportList();
+        e.exportToExcel(regView, "firstfile");
+        initSuccessMessage("Current list exported to excel");
+    }
+    
+    private void setCurrentListData(){
+        regView = new ArrayList<>();
+        for(int i = 0; i<ListViewRegistrations.getItems().size(); i++)
+        {
+            Registration r = (Registration)ListViewRegistrations.getItems().get(i);
+            regView.add(r);
+        }
+    }
+    
     @FXML
     private void handleUpdateSalaryButton(ActionEvent event)
     {
@@ -261,7 +282,8 @@ public class FXMLDocumentController implements Initializable
     private void resetRegistrationsList()
     {
         RegistrationMgr r = new RegistrationMgr();
-        fillList(ListViewRegistrations, r.findAll());
+        allRegistrations = r.findAll();
+        fillList(ListViewRegistrations, allRegistrations);
     }
 
     private void showPopup()
@@ -317,12 +339,24 @@ public class FXMLDocumentController implements Initializable
     public void removeItemFromList(ListView listview, Object item)
     {
         listview.getItems().remove(item);
-    }
-
+    }    
+    
     public void useYearFilter(String year)
     {
-        int yearInt = Integer.parseInt(year);
-        //TODO filter registrationobject based on yearfilter
+        regView = new ArrayList<>();
+        for(Registration r : allRegistrations)
+        {
+            System.out.println("Registration in allregistrations equals");
+            System.out.println(year);
+            System.out.println(r.getDate().getYear());
+            
+            if (r.getDate().getYear() == Integer.parseInt(year))
+            {
+                System.out.println("year equals");
+                regView.add(r);
+            }
+        }
+        fillList(ListViewRegistrations, regView);
     }
 
     public void useMonthFilter(String month) throws ParseException
@@ -435,7 +469,7 @@ public class FXMLDocumentController implements Initializable
             resetRegistrationsList();
         }
     }
-
+    
     @Override
     public void initialize(URL url, ResourceBundle rb)
     {
@@ -449,6 +483,7 @@ public class FXMLDocumentController implements Initializable
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
             {
                 useYearFilter(newValue);
+                System.out.println("value changed");
             }
         });
 
