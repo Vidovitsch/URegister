@@ -47,8 +47,6 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
-import javafx.util.converter.LocalDateTimeStringConverter;
-import org.eclipse.persistence.jpa.jpql.parser.DateTime;
 
 /**
  *
