@@ -54,6 +54,7 @@ import javafx.util.Duration;
  */
 public class FXMLDocumentController implements Initializable
 {
+
     private RegistrationMgr regMgr = new RegistrationMgr();
     private boolean fromDateSet = false;
     private boolean tillDateSet = false;
@@ -150,7 +151,8 @@ public class FXMLDocumentController implements Initializable
     }
 
     @FXML
-    private void handleUpdateSalaryButton(ActionEvent event) {
+    private void handleUpdateSalaryButton(ActionEvent event)
+    {
         String salary = TextFieldSalary.getText();
         regMgr.saveSalary(salary);
     }
@@ -373,8 +375,9 @@ public class FXMLDocumentController implements Initializable
         Optional<ButtonType> result = alert.showAndWait();
         return result.get() == ButtonType.OK;
     }
-    
-        public void initSuccessMessage(String message) {
+
+    public void initSuccessMessage(String message)
+    {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation Dialog");
         alert.setHeaderText(null);
@@ -384,12 +387,18 @@ public class FXMLDocumentController implements Initializable
 
     private void setSelectedRegistration(Registration r)
     {
-        DatePickerSelectedRegistrationDate.setValue(r.getDate().toLocalDate());
-        TextFieldSelectedRegistrationEndTime.setText(r.getEnd().toString());
-        TextFieldSelectedRegistrationStartTime.setText(r.getStart().toString());
-        TextFieldSelectedRegistrationWorkedTime.setText(r.getWorkedTime().toString());
-        TextAreaSelectedRegistrationDescription.setText(r.getContent());
-        selectedRegistration = r;
+        if (r != null)
+        {
+            DatePickerSelectedRegistrationDate.setValue(r.getDate().toLocalDate());
+            TextFieldSelectedRegistrationEndTime.setText(r.getEnd().toString());
+            TextFieldSelectedRegistrationStartTime.setText(r.getStart().toString());
+            TextFieldSelectedRegistrationWorkedTime.setText(r.getWorkedTime().toString());
+            TextAreaSelectedRegistrationDescription.setText(r.getContent());
+            selectedRegistration = r;
+        }
+        else{
+            
+        }
     }
 
     @FXML
@@ -415,14 +424,15 @@ public class FXMLDocumentController implements Initializable
         TextFieldSelectedRegistrationWorkedTime.clear();
         TextAreaSelectedRegistrationDescription.clear();
     }
-    
+
     private void deleteRegistration(ActionEvent event)
     {
 
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb)
+    {
         setSalaryField();
         ComboBoxYearFilter.getItems().addAll("2017", "2016", "2015", "2014", "2013");
         ComboBoxYearFilter.setPromptText("year");
@@ -487,9 +497,11 @@ public class FXMLDocumentController implements Initializable
         });
     }
 
-    private void setSalaryField() {
+    private void setSalaryField()
+    {
         String salary = regMgr.loadSalary();
-        if (salary != null) {
+        if (salary != null)
+        {
             TextFieldSalary.setText(salary);
         }
     }
