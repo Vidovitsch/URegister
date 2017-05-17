@@ -1,0 +1,5 @@
+projectKey=URegister
+serverUrl=http://localhost:9000
+dashboardUrl=http://localhost:9000/dashboard/index/URegister
+ceTaskId=AVwWiL4imiFtoPD6lRMs
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AVwWiL4imiFtoPD6lRMs

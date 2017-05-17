@@ -8,7 +8,6 @@ package Database;
 
 import Model.Registration;
 import java.sql.Date;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -40,7 +39,6 @@ public class RegistrationDAOJPAImpl implements RegistrationDAO {
     @Override
     public void delete(Registration reg) {
         em.remove(em.merge(reg));
-
     }
 
     @Override

@@ -15,9 +15,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import uregister.FXMLDocumentController;
 
 
 /**
@@ -37,6 +40,7 @@ public class RegistrationMgr {
             regDAO.create(reg);
             em.getTransaction().commit();
         } catch (Exception e) {
+            Logger.getLogger(RegistrationMgr.class.getName()).log(Level.SEVERE, null, e);
             em.getTransaction().rollback();
         } finally {
             em.close();
@@ -51,6 +55,7 @@ public class RegistrationMgr {
             regDAO.update(reg);
             em.getTransaction().commit();
         } catch (Exception e) {
+            Logger.getLogger(RegistrationMgr.class.getName()).log(Level.SEVERE, null, e);
             em.getTransaction().rollback();
         } finally {
             em.close();
@@ -66,6 +71,7 @@ public class RegistrationMgr {
             registrations = regDAO.findByDate(date);
             em.getTransaction().commit();
         } catch (Exception e) {
+            Logger.getLogger(RegistrationMgr.class.getName()).log(Level.SEVERE, null, e);
             em.getTransaction().rollback();
         } finally {
             em.close();
@@ -82,6 +88,7 @@ public class RegistrationMgr {
             regDAO.delete(reg);
             em.getTransaction().commit();
         } catch (Exception e) {
+            Logger.getLogger(RegistrationMgr.class.getName()).log(Level.SEVERE, null, e);
             em.getTransaction().rollback();
         } finally {
             em.close();
@@ -97,6 +104,7 @@ public class RegistrationMgr {
             registrations = regDAO.findAll();
             em.getTransaction().commit();
         } catch (Exception e) {
+            Logger.getLogger(RegistrationMgr.class.getName()).log(Level.SEVERE, null, e);
             em.getTransaction().rollback();
         } finally {
             em.close();

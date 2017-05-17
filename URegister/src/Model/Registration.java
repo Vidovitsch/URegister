@@ -22,13 +22,11 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "Registration")
-@NamedQueries(
-{
+@NamedQueries({
     @NamedQuery(name = "Account.findByDate", query = "SELECT a FROM Registration AS a WHERE a.date = :date"),
-    @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Registration AS a"),
+    @NamedQuery(name = "Account.findAll", query = "SELECT a FROM Registration AS a")
 })
-public class Registration implements Serializable
-{
+public class Registration implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -39,73 +37,59 @@ public class Registration implements Serializable
     private Time workedTime;
     private String content;
 
-    public Registration()
-    {
+    public Registration() {
     }
 
-    public Long getId()
-    {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Long id)
-    {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Time getWorkedTime()
-    {
+    public Time getWorkedTime() {
         return workedTime;
     }
 
-    public void setWorkedTime(Time workedTime)
-    {
+    public void setWorkedTime(Time workedTime) {
         this.workedTime = workedTime;
     }
 
-    public Date getDate()
-    {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(Date date)
-    {
+    public void setDate(Date date) {
         this.date = date;
     }
 
-    public Time getStart()
-    {
+    public Time getStart() {
         return start;
     }
 
-    public void setStart(Time start)
-    {
+    public void setStart(Time start) {
         this.start = start;
     }
 
-    public Time getEnd()
-    {
+    public Time getEnd() {
         return end;
     }
 
-    public void setEnd(Time end)
-    {
+    public void setEnd(Time end) {
         this.end = end;
     }
 
-    public String getContent()
-    {
+    public String getContent() {
         return this.content;
     }
 
-    public void setContent(String content)
-    {
+    public void setContent(String content) {
         this.content = content;
     }
 
     @Override
-    public String toString()
-    {
-        return "Date: "+date+", Period:" + start + "-" + end + ", Time worked: " + workedTime;
+    public String toString() {
+        return "Date: " + date + ", Period:" + start + "-" + end + ", Time worked: " + workedTime;
     }
 }
