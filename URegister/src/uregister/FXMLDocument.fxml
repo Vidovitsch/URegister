@@ -23,7 +23,7 @@
       <Label layoutX="589.0" layoutY="155.0" text="Start" />
       <TextField fx:id="TextFieldSelectedRegistrationEndTime" layoutX="641.0" layoutY="184.0" prefHeight="25.0" prefWidth="173.0" />
       <TextField fx:id="TextFieldSelectedRegistrationStartTime" layoutX="641.0" layoutY="151.0" prefHeight="25.0" prefWidth="173.0" />
-      <DatePicker fx:id="DatePickerSelectedRegistrationDate" layoutX="585.0" layoutY="114.0" prefHeight="25.0" prefWidth="228.0" />
+      <DatePicker fx:id="DatePickerSelectedRegistrationDate" disable="true" editable="false" layoutX="585.0" layoutY="114.0" prefHeight="25.0" prefWidth="228.0" />
       <Label layoutX="17.0" layoutY="429.0" text="Period:">
          <font>
             <Font size="18.0" />
@@ -48,9 +48,9 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextArea fx:id="TextAreaSelectedRegistrationDescription" layoutX="587.0" layoutY="219.0" prefHeight="113.0" prefWidth="228.0" />
+      <TextArea fx:id="TextAreaSelectedRegistrationDescription" layoutX="587.0" layoutY="246.0" prefHeight="86.0" prefWidth="228.0" />
       <Button fx:id="ButtonDeleteSelectedRegistration" layoutX="714.0" layoutY="339.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Delete" />
-      <Button fx:id="ButtonUpdateSelectedRegistration" layoutX="587.0" layoutY="339.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="111.0" text="Update" />
+      <Button fx:id="ButtonUpdateSelectedRegistration" layoutX="587.0" layoutY="339.0" mnemonicParsing="false" onAction="#updateRegistration" prefHeight="25.0" prefWidth="111.0" text="Update" />
       <DatePicker fx:id="DatePickerDayFilter" layoutX="412.0" layoutY="393.0" prefHeight="25.0" prefWidth="154.0" />
       <Label fx:id="LabelElapsedTime" layoutX="343.0" layoutY="22.0" prefHeight="27.0" prefWidth="228.0" text="Elapsed time: 00:00:00">
          <font>
@@ -58,7 +58,7 @@
          </font>
       </Label>
       <Button fx:id="ButtonFinishWork" layoutX="189.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleFinishWorkButton" prefHeight="54.0" prefWidth="140.0" text="Finish working" />
-      <Button fx:id="ButtonStartWork" layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleStartWorkButton" prefHeight="54.0" prefWidth="149.0" text="Start working" />
+      <Button layoutX="14.0" layoutY="18.0" mnemonicParsing="false" onAction="#handleStartWorkButton" prefHeight="54.0" prefWidth="149.0" text="Start working" />
       <ListView fx:id="ListViewRegistrations" layoutX="8.0" layoutY="114.0" prefHeight="250.0" prefWidth="557.0" />
       <Pane fx:id="PaneAddDescription" layoutX="286.0" layoutY="72.0" prefHeight="216.0" prefWidth="256.0" style="-fx-background-color: darkgrey;" visible="false">
          <children>
@@ -72,5 +72,7 @@
          </children>
       </Pane>
       <Button fx:id="ButtonPauseResume" defaultButton="true" disable="true" layoutX="344.0" layoutY="47.0" mnemonicParsing="false" onAction="#handlePauseOrResumeWorkButton" prefHeight="25.0" prefWidth="189.0" text="Pause" />
+      <TextField fx:id="TextFieldSelectedRegistrationWorkedTime" layoutX="641.0" layoutY="214.0" prefHeight="25.0" prefWidth="173.0" />
+      <Label layoutX="590.0" layoutY="218.0" text="Worked" />
    </children>
 </Pane>

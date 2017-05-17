@@ -34,6 +34,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -45,6 +46,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
@@ -72,6 +74,7 @@ public class FXMLDocumentController implements Initializable
     private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
     boolean ispaused = false;
     boolean isworking = false;
+    Registration selectedRegistration = null;
 
     @FXML
     private Button ButtonStartWork;
@@ -123,6 +126,9 @@ public class FXMLDocumentController implements Initializable
 
     @FXML
     private TextField TextFieldSelectedRegistrationEndTime;
+
+    @FXML
+    private TextField TextFieldSelectedRegistrationWorkedTime;
 
     @FXML
     private TextArea TextAreaSelectedRegistrationDescription;
@@ -252,11 +258,12 @@ public class FXMLDocumentController implements Initializable
         }
     }
 
-    private void resetRegistrationsList(){
+    private void resetRegistrationsList()
+    {
         RegistrationMgr r = new RegistrationMgr();
         fillList(ListViewRegistrations, r.findAll());
     }
-    
+
     private void showPopup()
     {
         PaneAddDescription.setVisible(true);
@@ -368,6 +375,53 @@ public class FXMLDocumentController implements Initializable
         Optional<ButtonType> result = alert.showAndWait();
         return result.get() == ButtonType.OK;
     }
+    
+        public void initSuccessMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        Optional<ButtonType> result = alert.showAndWait();
+    }
+
+    private void setSelectedRegistration(Registration r)
+    {
+        DatePickerSelectedRegistrationDate.setValue(r.getDate().toLocalDate());
+        TextFieldSelectedRegistrationEndTime.setText(r.getEnd().toString());
+        TextFieldSelectedRegistrationStartTime.setText(r.getStart().toString());
+        TextFieldSelectedRegistrationWorkedTime.setText(r.getWorkedTime().toString());
+        TextAreaSelectedRegistrationDescription.setText(r.getContent());
+        selectedRegistration = r;
+    }
+
+    @FXML
+    private void updateRegistration(ActionEvent event)
+    {
+        selectedRegistration.setContent(TextAreaSelectedRegistrationDescription.getText());
+        selectedRegistration.setStart(java.sql.Time.valueOf(TextFieldSelectedRegistrationStartTime.getText()));
+        selectedRegistration.setEnd(java.sql.Time.valueOf(TextFieldSelectedRegistrationEndTime.getText()));
+        selectedRegistration.setWorkedTime(java.sql.Time.valueOf(TextFieldSelectedRegistrationWorkedTime.getText()));
+        RegistrationMgr rmgr = new RegistrationMgr();
+        rmgr.updateRegistration(selectedRegistration);
+        initSuccessMessage("Registration updated");
+        resetRegistrationsList();
+        clearSelectedRegistration();
+    }
+
+    private void clearSelectedRegistration()
+    {
+        selectedRegistration = null;
+        DatePickerSelectedRegistrationDate.setValue(null);
+        TextFieldSelectedRegistrationEndTime.clear();
+        TextFieldSelectedRegistrationStartTime.clear();
+        TextFieldSelectedRegistrationWorkedTime.clear();
+        TextAreaSelectedRegistrationDescription.clear();
+    }
+    
+    private void deleteRegistration(ActionEvent event)
+    {
+
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb)
@@ -424,6 +478,15 @@ public class FXMLDocumentController implements Initializable
                     setTillDay(newValue);
         });
         resetRegistrationsList();
+        ListViewRegistrations.setOnMouseClicked(new EventHandler<MouseEvent>()
+        {
+            @Override
+            public void handle(MouseEvent event)
+            {
+                Registration r = (Registration) ListViewRegistrations.getSelectionModel().getSelectedItem();
+                setSelectedRegistration(r);
+            }
+        });
     }
 
 }
