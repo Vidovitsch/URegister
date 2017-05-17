@@ -395,9 +395,9 @@ public class FXMLDocumentController implements Initializable
             TextFieldSelectedRegistrationWorkedTime.setText(r.getWorkedTime().toString());
             TextAreaSelectedRegistrationDescription.setText(r.getContent());
             selectedRegistration = r;
-        }
-        else{
-            
+        } else
+        {
+
         }
     }
 
@@ -408,8 +408,7 @@ public class FXMLDocumentController implements Initializable
         selectedRegistration.setStart(java.sql.Time.valueOf(TextFieldSelectedRegistrationStartTime.getText()));
         selectedRegistration.setEnd(java.sql.Time.valueOf(TextFieldSelectedRegistrationEndTime.getText()));
         selectedRegistration.setWorkedTime(java.sql.Time.valueOf(TextFieldSelectedRegistrationWorkedTime.getText()));
-        RegistrationMgr rmgr = new RegistrationMgr();
-        rmgr.updateRegistration(selectedRegistration);
+        regMgr.updateRegistration(selectedRegistration);
         initSuccessMessage("Registration updated");
         resetRegistrationsList();
         clearSelectedRegistration();
@@ -427,7 +426,11 @@ public class FXMLDocumentController implements Initializable
 
     private void deleteRegistration(ActionEvent event)
     {
-
+        if (initAlertMessage("Are you sure you want to remove the selected registration?"))
+        {
+            regMgr.Remove(selectedRegistration);
+            clearSelectedRegistration();
+        }
     }
 
     @Override
