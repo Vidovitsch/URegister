@@ -74,7 +74,21 @@ public class RegistrationMgr {
         return registrations;
     }
     
-        public List<Registration> findAll() {
+    public void remove(Registration reg) {
+        EntityManager em = emf.createEntityManager();
+        regDAO = new RegistrationDAOJPAImpl(em);
+        em.getTransaction().begin();
+        try {
+            regDAO.delete(reg);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
+        }
+    }
+    
+    public List<Registration> findAll() {
         List<Registration> registrations = null;
         EntityManager em = emf.createEntityManager();
         regDAO = new RegistrationDAOJPAImpl(em);
