@@ -48,7 +48,7 @@ public class RegistrationMgr {
         regDAO = new RegistrationDAOJPAImpl(em);
         em.getTransaction().begin();
         try {
-            regDAO.update(createDummy());
+            regDAO.update(reg);
             em.getTransaction().commit();
         } catch (Exception e) {
             em.getTransaction().rollback();
@@ -101,16 +101,5 @@ public class RegistrationMgr {
         }
         
         return registrations;
-    }
-    
-    //Dummy method
-    private Registration createDummy() {
-        Registration reg = new Registration();
-        reg.setDate(new Date(1212, 12, 12));
-        reg.setStart(new Time(12, 12, 12));
-        reg.setEnd(new Time(13, 13, 13));
-        reg.setContent("Test");
-        
-        return reg;
     }
 }
