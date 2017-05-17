@@ -424,12 +424,15 @@ public class FXMLDocumentController implements Initializable
         TextAreaSelectedRegistrationDescription.clear();
     }
 
+    @FXML
     private void deleteRegistration(ActionEvent event)
     {
         if (initAlertMessage("Are you sure you want to remove the selected registration?"))
         {
-            regMgr.Remove(selectedRegistration);
+            System.out.println(String.valueOf(selectedRegistration.getId()));
+            regMgr.remove(selectedRegistration);
             clearSelectedRegistration();
+            resetRegistrationsList();
         }
     }
 

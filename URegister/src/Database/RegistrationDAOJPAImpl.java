@@ -39,7 +39,8 @@ public class RegistrationDAOJPAImpl implements RegistrationDAO {
 
     @Override
     public void delete(Registration reg) {
-        em.remove(reg);
+        em.remove(em.merge(reg));
+
     }
 
     @Override
