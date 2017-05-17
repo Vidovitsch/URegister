@@ -6,9 +6,7 @@
 package uregister;
 
 import Model.Registration;
-import Model.TestModel;
 import Service.RegistrationMgr;
-import Service.TimeMgr;
 import java.net.URL;
 import java.sql.Time;
 import java.text.DateFormatSymbols;
@@ -56,7 +54,7 @@ import javafx.util.Duration;
  */
 public class FXMLDocumentController implements Initializable
 {
-
+    private RegistrationMgr regMgr = new RegistrationMgr();
     private boolean fromDateSet = false;
     private boolean tillDateSet = false;
     private Date starttime = null;
@@ -152,9 +150,9 @@ public class FXMLDocumentController implements Initializable
     }
 
     @FXML
-    private void handleUpdateSalaryButton(ActionEvent event)
-    {
-
+    private void handleUpdateSalaryButton(ActionEvent event) {
+        String salary = TextFieldSalary.getText();
+        regMgr.saveSalary(salary);
     }
 
     @FXML
@@ -424,8 +422,8 @@ public class FXMLDocumentController implements Initializable
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
+        setSalaryField();
         ComboBoxYearFilter.getItems().addAll("2017", "2016", "2015", "2014", "2013");
         ComboBoxYearFilter.setPromptText("year");
         ComboBoxYearFilter.setEditable(false);
@@ -489,4 +487,10 @@ public class FXMLDocumentController implements Initializable
         });
     }
 
+    private void setSalaryField() {
+        String salary = regMgr.loadSalary();
+        if (salary != null) {
+            TextFieldSalary.setText(salary);
+        }
+    }
 }

@@ -102,4 +102,12 @@ public class RegistrationMgr {
         
         return registrations;
     }
+    
+    public void saveSalary(String salary) {
+        new Utility().saveSalary(salary);
+    }
+    
+    public String loadSalary() {
+        return new Utility().loadSalary();
+    }
 }
