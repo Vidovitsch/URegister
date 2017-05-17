@@ -48,4 +48,11 @@ public class RegistrationDAOJPAImpl implements RegistrationDAO {
         q.setParameter("date", date);
         return (List<Registration>) q.getResultList();
     }
+    
+    @Override
+    public List<Registration> findAll() {
+       CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
+        cq.select(cq.from(Registration.class));
+        return em.createQuery(cq).getResultList();
+    }
 }

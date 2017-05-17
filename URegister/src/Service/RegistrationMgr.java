@@ -74,6 +74,23 @@ public class RegistrationMgr {
         return registrations;
     }
     
+        public List<Registration> findAll() {
+        List<Registration> registrations = null;
+        EntityManager em = emf.createEntityManager();
+        regDAO = new RegistrationDAOJPAImpl(em);
+        em.getTransaction().begin();
+        try {
+            registrations = regDAO.findAll();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
+        }
+        
+        return registrations;
+    }
+    
     public List<Registration> findByDateSpan(Date start, Date end) {
         List<Registration> registrations = new ArrayList();
         Date varDate = start;

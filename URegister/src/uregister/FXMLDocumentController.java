@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -35,7 +36,9 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -56,19 +59,21 @@ public class FXMLDocumentController implements Initializable
 
     private boolean fromDateSet = false;
     private boolean tillDateSet = false;
-    Date starttime = null;
+    private Date starttime = null;
     int elapsedhours = 0;
     int elapsedminutes = 0;
     int elapsedseconds = 0;
-    String workedTime = "";
-    Date endtime = null;
-    Timeline timeline = null;
-    String startString = "";
-    String endString = "";
-    Time sTime = null;
-    Time eTime = null;
-    String ElapsedText = "";
-    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+    private String workedTime = "";
+    private Date endtime = null;
+    private Timeline timeline = null;
+    private String startString = "";
+    private String endString = "";
+    private Time sTime = null;
+    private Time eTime = null;
+    private String ElapsedText = "";
+    private SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+    boolean ispaused = false;
+    boolean isworking = false;
 
     @FXML
     private Button ButtonStartWork;
@@ -134,6 +139,9 @@ public class FXMLDocumentController implements Initializable
     private Button ButtonExportCurrentList;
 
     @FXML
+    private Button ButtonPauseResume;
+
+    @FXML
     private void handleButtonAction(ActionEvent event)
     {
 
@@ -147,6 +155,20 @@ public class FXMLDocumentController implements Initializable
 
     @FXML
     private void handleStartWorkButton(ActionEvent event)
+    {
+        if (isworking)
+        {
+            initAlertMessage("you have already started working, click pause to take a break or finish you worksession");
+        } else
+        {
+            createNewTimeline();
+            isworking = true;
+            ButtonPauseResume.setDisable(!isworking);
+        }
+
+    }
+
+    private void createNewTimeline()
     {
         Calendar cal = Calendar.getInstance();
         starttime = cal.getTime();
@@ -162,32 +184,86 @@ public class FXMLDocumentController implements Initializable
     @FXML
     private void handleFinishWorkButton(ActionEvent event)
     {
-        timeline.stop();
-        Calendar cal = Calendar.getInstance();
-        endtime = cal.getTime();
-        endString = (sdf.format(cal.getTime()));
-        workedTime = LabelElapsedTime.getText();
-        showPopup();
+        if (isworking)
+        {
+            timeline.stop();
+            Calendar cal = Calendar.getInstance();
+            endtime = cal.getTime();
+            endString = (sdf.format(cal.getTime()));
+            workedTime = LabelElapsedTime.getText();
+            showPopup();
+        } else
+        {
+            initAlertMessage("Start a worksession before you can finish one");
+        }
+
     }
-    
+
+    @FXML
+    private void handlePauseOrResumeWorkButton(ActionEvent event)
+    {
+        if (ispaused)
+        {
+            setPause(false);
+            ispaused = false;
+        } else
+        {
+            setPause(true);
+            ispaused = true;
+        }
+    }
+
+    private void setPause(boolean pause)
+    {
+        if (!pause)
+        {
+            timeline.play();
+            ButtonPauseResume.setText("Pause");
+        } else
+        {
+            timeline.stop();
+            ButtonPauseResume.setText("resume");
+        }
+    }
+
     @FXML
     private void handleSubmitRegistrationButton(ActionEvent event)
     {
         String registrationDescription = textAreaNewRegistrationDescription.getText();
         Registration r = new Registration();
-        r.setContent(registrationDescription);
-        r.setDate(new java.sql.Date(endtime.getTime()));
-        r.setStart(java.sql.Time.valueOf(startString));
-        r.setEnd(java.sql.Time.valueOf(endString));
-        RegistrationMgr rmgr = new RegistrationMgr();
-        rmgr.createRegistration(r);
-        PaneAddDescription.setVisible(false);
+        if (registrationDescription.equals(""))
+        {
+            initErrorMessage("You should add a description of the work you've done");
+        } else
+        {
+            r.setContent(registrationDescription);
+            r.setDate(new java.sql.Date(endtime.getTime()));
+            r.setStart(java.sql.Time.valueOf(startString));
+            r.setEnd(java.sql.Time.valueOf(endString));
+            r.setWorkedTime(java.sql.Time.valueOf(ElapsedText));
+            RegistrationMgr rmgr = new RegistrationMgr();
+            rmgr.createRegistration(r);
+            resetTime();
+            setPause(false);
+            timeline.stop();
+            ButtonPauseResume.setDisable(true);
+            textAreaNewRegistrationDescription.clear();
+            isworking = false;
+            PaneAddDescription.setVisible(false);
+            resetRegistrationsList();
+        }
     }
 
-    private void showPopup(){
-        PaneAddDescription.setVisible(true);
+    private void resetRegistrationsList(){
+        RegistrationMgr r = new RegistrationMgr();
+        fillList(ListViewRegistrations, r.findAll());
     }
     
+    private void showPopup()
+    {
+        PaneAddDescription.setVisible(true);
+    }
+
     private void updateTime()
     {
         elapsedseconds++;
@@ -205,7 +281,19 @@ public class FXMLDocumentController implements Initializable
         String hours = String.valueOf(elapsedhours);
         String minutes = String.valueOf(elapsedminutes);
         String seconds = String.valueOf(elapsedseconds);
-        ElapsedText = ("0" + hours).substring(hours.length()-1) + ":" + ("0" + minutes).substring(minutes.length()-1) + ":" + ("0" + seconds).substring(seconds.length()-1);
+        ElapsedText = ("0" + hours).substring(hours.length() - 1) + ":" + ("0" + minutes).substring(minutes.length() - 1) + ":" + ("0" + seconds).substring(seconds.length() - 1);
+        updateElapsedTime(ElapsedText);
+    }
+
+    private void resetTime()
+    {
+        elapsedhours = 0;
+        elapsedminutes = 0;
+        elapsedseconds = 0;
+        String hours = String.valueOf(elapsedhours);
+        String minutes = String.valueOf(elapsedminutes);
+        String seconds = String.valueOf(elapsedseconds);
+        ElapsedText = ("0" + hours).substring(hours.length() - 1) + ":" + ("0" + minutes).substring(minutes.length() - 1) + ":" + ("0" + seconds).substring(seconds.length() - 1);
         updateElapsedTime(ElapsedText);
     }
 
@@ -214,9 +302,10 @@ public class FXMLDocumentController implements Initializable
         LabelElapsedTime.setText("Elapsed time: " + timerText);
     }
 
-    public void fillList(ListView listview, ArrayList<String> stringlist)
+    public void fillList(ListView listview, List<Registration> stringlist)
     {
-        ObservableList<String> doList = FXCollections.observableArrayList(stringlist);
+        listview.getItems().clear();
+        ObservableList<Registration> doList = FXCollections.observableArrayList(stringlist);
         listview.getItems().addAll(doList);
     }
 
@@ -260,6 +349,26 @@ public class FXMLDocumentController implements Initializable
     public void addItemToList(ListView listview, Object item)
     {
         listview.getItems().add(item);
+    }
+
+    public void initErrorMessage(String message)
+    {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Information Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+
+    public boolean initAlertMessage(String message)
+    {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Confirmation Dialog");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.get() == ButtonType.OK;
     }
 
     @Override
@@ -316,5 +425,7 @@ public class FXMLDocumentController implements Initializable
                 {
                     setTillDay(newValue);
         });
+        resetRegistrationsList();
     }
+
 }

@@ -71,5 +71,6 @@
             </Label>
          </children>
       </Pane>
+      <Button fx:id="ButtonPauseResume" defaultButton="true" disable="true" layoutX="344.0" layoutY="47.0" mnemonicParsing="false" onAction="#handlePauseOrResumeWorkButton" prefHeight="25.0" prefWidth="189.0" text="Pause" />
    </children>
 </Pane>

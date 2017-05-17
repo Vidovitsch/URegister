@@ -44,4 +44,6 @@ public interface RegistrationDAO {
      * @return a list of entities
      */
     List<Registration> findByDate(Date date);
+    
+    List<Registration> findAll();
 }
