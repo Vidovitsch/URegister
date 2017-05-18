@@ -53,8 +53,7 @@ import javafx.util.Duration;
  *
  * @author David
  */
-public class FXMLDocumentController implements Initializable
-{
+public class FXMLDocumentController implements Initializable {
 
     private RegistrationMgr regMgr = new RegistrationMgr();
     private boolean fromDateSet = false;
@@ -151,45 +150,37 @@ public class FXMLDocumentController implements Initializable
     private Button ButtonPauseResume;
 
     @FXML
-    private void handleButtonAction(ActionEvent event)
-    {
+    private void handleButtonAction(ActionEvent event) {
 
     }
 
     @FXML
-    private void handleExportCurrentListButton(ActionEvent event)
-    {
+    private void handleExportCurrentListButton(ActionEvent event) {
         setCurrentListData();
         ExportList e = new ExportList();
         e.exportToExcel(regView, "firstfile");
         initSuccessMessage("Current list exported to excel");
     }
 
-    private void setCurrentListData()
-    {
+    private void setCurrentListData() {
         regView = new ArrayList<>();
-        for (int i = 0; i < ListViewRegistrations.getItems().size(); i++)
-        {
+        for (int i = 0; i < ListViewRegistrations.getItems().size(); i++) {
             Registration r = (Registration) ListViewRegistrations.getItems().get(i);
             regView.add(r);
         }
     }
 
     @FXML
-    private void handleUpdateSalaryButton(ActionEvent event)
-    {
+    private void handleUpdateSalaryButton(ActionEvent event) {
         String salary = TextFieldSalary.getText();
         regMgr.saveSalary(salary);
     }
 
     @FXML
-    private void handleStartWorkButton(ActionEvent event)
-    {
-        if (isworking)
-        {
+    private void handleStartWorkButton(ActionEvent event) {
+        if (isworking) {
             initAlertMessage("you have already started working, click pause to take a break or finish you worksession");
-        } else
-        {
+        } else {
             createNewTimeline();
             isworking = true;
             ButtonPauseResume.setDisable(!isworking);
@@ -197,8 +188,7 @@ public class FXMLDocumentController implements Initializable
 
     }
 
-    private void createNewTimeline()
-    {
+    private void createNewTimeline() {
         Calendar cal = Calendar.getInstance();
         starttime = cal.getTime();
         startString = (sdf.format(cal.getTime()));
@@ -211,60 +201,48 @@ public class FXMLDocumentController implements Initializable
     }
 
     @FXML
-    private void handleFinishWorkButton(ActionEvent event)
-    {
-        if (isworking)
-        {
+    private void handleFinishWorkButton(ActionEvent event) {
+        if (isworking) {
             timeline.stop();
             Calendar cal = Calendar.getInstance();
             endtime = cal.getTime();
             endString = (sdf.format(cal.getTime()));
             workedTime = LabelElapsedTime.getText();
             showPopup();
-        } else
-        {
+        } else {
             initAlertMessage("Start a worksession before you can finish one");
         }
 
     }
 
     @FXML
-    private void handlePauseOrResumeWorkButton(ActionEvent event)
-    {
-        if (ispaused)
-        {
+    private void handlePauseOrResumeWorkButton(ActionEvent event) {
+        if (ispaused) {
             setPause(false);
             ispaused = false;
-        } else
-        {
+        } else {
             setPause(true);
             ispaused = true;
         }
     }
 
-    private void setPause(boolean pause)
-    {
-        if (!pause)
-        {
+    private void setPause(boolean pause) {
+        if (!pause) {
             timeline.play();
             ButtonPauseResume.setText("Pause");
-        } else
-        {
+        } else {
             timeline.stop();
             ButtonPauseResume.setText("resume");
         }
     }
 
     @FXML
-    private void handleSubmitRegistrationButton(ActionEvent event)
-    {
+    private void handleSubmitRegistrationButton(ActionEvent event) {
         String registrationDescription = textAreaNewRegistrationDescription.getText();
         Registration r = new Registration();
-        if (registrationDescription.equals(""))
-        {
+        if (registrationDescription.equals("")) {
             initErrorMessage("You should add a description of the work you've done");
-        } else
-        {
+        } else {
             r.setContent(registrationDescription);
             r.setDate(new java.sql.Date(endtime.getTime()));
             r.setStart(java.sql.Time.valueOf(startString));
@@ -283,27 +261,22 @@ public class FXMLDocumentController implements Initializable
         }
     }
 
-    private void resetRegistrationsList()
-    {
+    private void resetRegistrationsList() {
         RegistrationMgr r = new RegistrationMgr();
         allRegistrations = r.findAll();
         fillList(ListViewRegistrations, allRegistrations);
     }
 
-    private void showPopup()
-    {
+    private void showPopup() {
         PaneAddDescription.setVisible(true);
     }
 
-    private void updateTime()
-    {
+    private void updateTime() {
         elapsedseconds++;
-        if (elapsedseconds == 60)
-        {
+        if (elapsedseconds == 60) {
             elapsedminutes++;
             elapsedseconds = 0;
-            if (elapsedminutes == 60)
-            {
+            if (elapsedminutes == 60) {
                 elapsedhours++;
                 elapsedminutes = 0;
             }
@@ -316,8 +289,7 @@ public class FXMLDocumentController implements Initializable
         updateElapsedTime(ElapsedText);
     }
 
-    private void resetTime()
-    {
+    private void resetTime() {
         elapsedhours = 0;
         elapsedminutes = 0;
         elapsedseconds = 0;
@@ -328,34 +300,28 @@ public class FXMLDocumentController implements Initializable
         updateElapsedTime(ElapsedText);
     }
 
-    public void updateElapsedTime(String timerText)
-    {
+    public void updateElapsedTime(String timerText) {
         LabelElapsedTime.setText("Elapsed time: " + timerText);
     }
 
-    public void fillList(ListView listview, List<Registration> stringlist)
-    {
+    public void fillList(ListView listview, List<Registration> stringlist) {
         listview.getItems().clear();
         ObservableList<Registration> doList = FXCollections.observableArrayList(stringlist);
         listview.getItems().addAll(doList);
     }
 
-    public void removeItemFromList(ListView listview, Object item)
-    {
+    public void removeItemFromList(ListView listview, Object item) {
         listview.getItems().remove(item);
     }
 
-    public void useYearFilter(String year)
-    {
+    public void useYearFilter(String year) {
         regView = new ArrayList<>();
-        for (Registration r : allRegistrations)
-        {
+        for (Registration r : allRegistrations) {
             System.out.println("Registration in allregistrations equals");
             System.out.println(year);
             System.out.println(r.getDate().getYear());
 
-            if (r.getDate().getYear() == Integer.parseInt(year))
-            {
+            if (r.getDate().getYear() == Integer.parseInt(year)) {
                 System.out.println("year equals");
                 regView.add(r);
             }
@@ -363,8 +329,7 @@ public class FXMLDocumentController implements Initializable
         fillList(ListViewRegistrations, regView);
     }
 
-    public void useMonthFilter(String month) throws ParseException
-    {
+    public void useMonthFilter(String month) throws ParseException {
         Date date;
         date = new SimpleDateFormat("MMMM").parse(month);
         Calendar cal = Calendar.getInstance();
@@ -373,29 +338,24 @@ public class FXMLDocumentController implements Initializable
         //TODO filter registrationobject based on monthfilter
     }
 
-    public void useDateFilter(LocalDate date)
-    {
+    public void useDateFilter(LocalDate date) {
         //TODO filter registrationobject based on datefilter
         System.out.println(date);
     }
 
-    private void setFromDay(LocalDate date)
-    {
+    private void setFromDay(LocalDate date) {
         System.out.println(date);
     }
 
-    private void setTillDay(LocalDate date)
-    {
+    private void setTillDay(LocalDate date) {
         System.out.println(date);
     }
 
-    public void addItemToList(ListView listview, Object item)
-    {
+    public void addItemToList(ListView listview, Object item) {
         listview.getItems().add(item);
     }
 
-    public void initErrorMessage(String message)
-    {
+    public void initErrorMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");
         alert.setHeaderText(null);
@@ -403,8 +363,7 @@ public class FXMLDocumentController implements Initializable
         alert.showAndWait();
     }
 
-    public boolean initAlertMessage(String message)
-    {
+    public boolean initAlertMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation Dialog");
         alert.setHeaderText(null);
@@ -414,8 +373,7 @@ public class FXMLDocumentController implements Initializable
         return result.get() == ButtonType.OK;
     }
 
-    public void initSuccessMessage(String message)
-    {
+    public void initSuccessMessage(String message) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation Dialog");
         alert.setHeaderText(null);
@@ -423,10 +381,8 @@ public class FXMLDocumentController implements Initializable
         Optional<ButtonType> result = alert.showAndWait();
     }
 
-    private void setSelectedRegistration(Registration r)
-    {
-        if (r != null)
-        {
+    private void setSelectedRegistration(Registration r) {
+        if (r != null) {
             DatePickerSelectedRegistrationDate.setValue(r.getDate().toLocalDate());
             TextFieldSelectedRegistrationEndTime.setText(r.getEnd().toString());
             TextFieldSelectedRegistrationStartTime.setText(r.getStart().toString());
@@ -435,21 +391,18 @@ public class FXMLDocumentController implements Initializable
             selectedRegistration = r;
             ButtonUpdateSelectedRegistration.setDisable(false);
             ButtonDeleteSelectedRegistration.setDisable(false);
-        } else
-        {
+        } else {
 
         }
     }
 
     @FXML
-    private void handleSelectedRegistrationDateChanged(ActionEvent event)
-    {
+    private void handleSelectedRegistrationDateChanged(ActionEvent event) {
         prepareNewRegistration();
     }
 
     @FXML
-    private void updateRegistration(ActionEvent event)
-    {
+    private void updateRegistration(ActionEvent event) {
         selectedRegistration.setContent(TextAreaSelectedRegistrationDescription.getText());
         selectedRegistration.setStart(java.sql.Time.valueOf(TextFieldSelectedRegistrationStartTime.getText()));
         selectedRegistration.setEnd(java.sql.Time.valueOf(TextFieldSelectedRegistrationEndTime.getText()));
@@ -461,8 +414,7 @@ public class FXMLDocumentController implements Initializable
     }
 
     @FXML
-    private void CreateNewRegistration(ActionEvent event)
-    {
+    private void CreateNewRegistration(ActionEvent event) {
         Registration newRegistration = new Registration();
         newRegistration.setContent(TextAreaSelectedRegistrationDescription.getText());
         newRegistration.setStart(java.sql.Time.valueOf(TextFieldSelectedRegistrationStartTime.getText()));
@@ -474,8 +426,7 @@ public class FXMLDocumentController implements Initializable
         clearSelectedRegistration();
     }
 
-    private void clearSelectedRegistration()
-    {
+    private void clearSelectedRegistration() {
         selectedRegistration = null;
         DatePickerSelectedRegistrationDate.setValue(null);
         TextFieldSelectedRegistrationEndTime.clear();
@@ -486,8 +437,7 @@ public class FXMLDocumentController implements Initializable
         ButtonDeleteSelectedRegistration.setDisable(true);
     }
 
-    private void prepareNewRegistration()
-    {
+    private void prepareNewRegistration() {
         selectedRegistration = null;
         TextFieldSelectedRegistrationEndTime.setText("00:00:00");
         TextFieldSelectedRegistrationStartTime.setText("00:00:00");
@@ -498,10 +448,8 @@ public class FXMLDocumentController implements Initializable
     }
 
     @FXML
-    private void deleteRegistration(ActionEvent event)
-    {
-        if (initAlertMessage("Are you sure you want to remove the selected registration?"))
-        {
+    private void deleteRegistration(ActionEvent event) {
+        if (initAlertMessage("Are you sure you want to remove the selected registration?")) {
             System.out.println(String.valueOf(selectedRegistration.getId()));
             regMgr.remove(selectedRegistration);
             clearSelectedRegistration();
@@ -510,75 +458,61 @@ public class FXMLDocumentController implements Initializable
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb)
-    {
+    public void initialize(URL url, ResourceBundle rb) {
         setSalaryField();
         ComboBoxYearFilter.getItems().addAll("2017", "2016", "2015", "2014", "2013");
         ComboBoxYearFilter.setPromptText("year");
         ComboBoxYearFilter.setEditable(false);
-        ComboBoxYearFilter.valueProperty().addListener(new ChangeListener<String>()
-        {
+        ComboBoxYearFilter.valueProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
-            {
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 useYearFilter(newValue);
                 System.out.println("value changed");
             }
         });
 
         String[] months = new DateFormatSymbols().getMonths();
-        for (int i = 0; i < months.length; i++)
-        {
+        for (int i = 0; i < months.length; i++) {
             ComboBoxMonthFilter.getItems().add(months[i]);
         }
         ComboBoxMonthFilter.setPromptText("month");
         ComboBoxMonthFilter.setEditable(false);
-        ComboBoxMonthFilter.valueProperty().addListener(new ChangeListener<String>()
-        {
+        ComboBoxMonthFilter.valueProperty().addListener(new ChangeListener<String>() {
             @Override
-            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
-            {
-                try
-                {
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                try {
                     useMonthFilter(newValue);
-                } catch (ParseException ex)
-                {
+                } catch (ParseException ex) {
                     Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
 
         DatePickerDayFilter.valueProperty().addListener((ov, oldValue, newValue)
-                -> 
-                {
-                    useDateFilter(newValue);
+                -> {
+            useDateFilter(newValue);
         });
 
         DatePickerFromDayFilter.valueProperty().addListener((ov, oldValue, newValue)
-                -> 
-                {
-                    setFromDay(newValue);
+                -> {
+            setFromDay(newValue);
         });
 
         DatePickerTillDayFilter.valueProperty().addListener((ov, oldValue, newValue)
-                -> 
-                {
-                    setTillDay(newValue);
+                -> {
+            setTillDay(newValue);
         });
         resetRegistrationsList();
         ListViewRegistrations.setOnMouseClicked((MouseEvent event)
-                -> 
-                {
-                    Registration r = (Registration) ListViewRegistrations.getSelectionModel().getSelectedItem();
-                    setSelectedRegistration(r);
+                -> {
+            Registration r = (Registration) ListViewRegistrations.getSelectionModel().getSelectedItem();
+            setSelectedRegistration(r);
         });
     }
 
-    private void setSalaryField()
-    {
+    private void setSalaryField() {
         String salary = regMgr.loadSalary();
-        if (salary != null)
-        {
+        if (salary != null) {
             TextFieldSalary.setText(salary);
         }
     }
