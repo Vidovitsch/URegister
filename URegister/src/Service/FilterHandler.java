@@ -45,7 +45,6 @@ public class FilterHandler {
                 }
             }
         } else {
-            System.out.println("YESS!");
             List<Registration> extraFiltered = new ArrayList();
             for (Registration reg : allRegistrations) {
                 String y = String.valueOf(reg.getDate().getYear() + 1900);
@@ -64,7 +63,15 @@ public class FilterHandler {
     }
     
     public void filterOnDate(ListView lv, String date) {
-        
+        List<Registration> filtered = new ArrayList();
+        String[] values = date.split("-");
+        for (Registration reg : allRegistrations) {
+            String[] v = reg.getDate().toString().split("-");
+            if (v[0].equals(values[0]) && v[1].equals(values[1]) && v[2].equals(values[2])) {
+                filtered.add(reg);
+            }
+        }
+        fillList(lv, filtered);
     }
     
     public void filterOnDateSpan(ListView lv, String startDate, String endDate) {
@@ -76,4 +83,15 @@ public class FilterHandler {
         ObservableList<Registration> doList = FXCollections.observableArrayList(registrations);
         lv.getItems().addAll(doList);
     }
+    
+//    private String[] removeZero(String[] v) {
+//        if (v[1].substring(0, 1).contains("0")) {
+//            v[1] = v[1].substring(1);
+//        }
+//        if (v[2].substring(0, 1).contains("0")) {
+//            v[2] = v[2].substring(1);
+//        }
+//        
+//        return v;
+//    }
 }

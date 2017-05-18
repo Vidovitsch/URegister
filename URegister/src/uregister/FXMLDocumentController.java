@@ -361,8 +361,7 @@ public class FXMLDocumentController implements Initializable {
     }
 
     public void useDateFilter(LocalDate date) {
-        //TODO filter registrationobject based on datefilter
-        System.out.println(date);
+        fHandler.filterOnDate(ListViewRegistrations, date.toString());
     }
 
     private void setFromDay(LocalDate date) {

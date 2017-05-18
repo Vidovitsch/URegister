@@ -90,6 +90,6 @@ public class Registration implements Serializable {
 
     @Override
     public String toString() {
-        return "Date: " + date + ", Period:" + start + "-" + end + ", Time worked: " + workedTime;
+        return "Date: " + date + "\nPeriod: " + start + " - " + end + "                                                                 Time worked: " + workedTime;
     }
 }
