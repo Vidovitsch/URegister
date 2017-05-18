@@ -152,7 +152,6 @@ public class FXMLDocumentController implements Initializable {
     }
 
     @FXML
-<<<<<<< HEAD
     private void handleExportCurrentListButton(ActionEvent event)
     {
         setCurrentListData();
@@ -173,9 +172,6 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void handleUpdateSalaryButton(ActionEvent event)
     {
-=======
-    private void handleUpdateSalaryButton(ActionEvent event) {
->>>>>>> origin/master
         String salary = TextFieldSalary.getText();
         regMgr.saveSalary(salary);
     }
