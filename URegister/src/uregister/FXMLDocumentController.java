@@ -7,6 +7,7 @@ package uregister;
 
 import Model.Registration;
 import Service.ExportList;
+import Service.FilterHandler;
 import Service.RegistrationMgr;
 import java.net.URL;
 import java.sql.Time;
@@ -55,6 +56,7 @@ import javafx.util.Duration;
  */
 public class FXMLDocumentController implements Initializable {
 
+    private FilterHandler fHandler;
     private RegistrationMgr regMgr = new RegistrationMgr();
     private boolean fromDateSet = false;
     private boolean tillDateSet = false;
@@ -265,6 +267,7 @@ public class FXMLDocumentController implements Initializable {
         RegistrationMgr r = new RegistrationMgr();
         allRegistrations = r.findAll();
         fillList(ListViewRegistrations, allRegistrations);
+        fHandler = new FilterHandler(allRegistrations);
     }
 
     private void showPopup() {
@@ -466,8 +469,9 @@ public class FXMLDocumentController implements Initializable {
         ComboBoxYearFilter.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                useYearFilter(newValue);
-                System.out.println("value changed");
+                String month = (String) ComboBoxMonthFilter.getSelectionModel().getSelectedItem();
+                int index = ComboBoxMonthFilter.getItems().indexOf(month);
+                fHandler.filterOnMonthYear(ListViewRegistrations, newValue, index);
             }
         });
 
@@ -480,11 +484,9 @@ public class FXMLDocumentController implements Initializable {
         ComboBoxMonthFilter.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-                try {
-                    useMonthFilter(newValue);
-                } catch (ParseException ex) {
-                    Logger.getLogger(FXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                int index = ComboBoxMonthFilter.getItems().indexOf(newValue);
+                String year = (String) ComboBoxYearFilter.getSelectionModel().getSelectedItem();
+                fHandler.filterOnMonthYear(ListViewRegistrations, year, index);
             }
         });
 
