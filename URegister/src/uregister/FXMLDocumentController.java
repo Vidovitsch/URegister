@@ -9,6 +9,8 @@ import Model.Registration;
 import Service.ExportList;
 import Service.FilterHandler;
 import Service.RegistrationMgr;
+import java.awt.FileDialog;
+import java.io.File;
 import java.net.URL;
 import java.sql.Time;
 import java.text.DateFormatSymbols;
@@ -48,6 +50,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
+import javafx.stage.FileChooser;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 
 /**
@@ -78,6 +82,11 @@ public class FXMLDocumentController implements Initializable {
     Registration selectedRegistration = null;
     List<Registration> regView;
     List<Registration> allRegistrations;
+    private Stage stage;
+
+    public void setStage(Stage s) {
+        this.stage = s;
+    }
 
     @FXML
     private Button ButtonStartWork;
@@ -152,16 +161,26 @@ public class FXMLDocumentController implements Initializable {
     private Button ButtonPauseResume;
 
     @FXML
-    private void handleButtonAction(ActionEvent event) {
+    private void handleExportCurrentListButton(ActionEvent event) {
+
+        String filename = locateFile(event).getAbsolutePath();
+        if (!filename.equals(null)) {
+            setCurrentListData();
+            ExportList e = new ExportList();
+            e.exportToExcel(regView, filename);
+            System.out.println(filename);
+            initSuccessMessage("Current list exported to excel");
+        }else{
+            initAlertMessage("List is not exported");
+        }
 
     }
 
     @FXML
-    private void handleExportCurrentListButton(ActionEvent event) {
-        setCurrentListData();
-        ExportList e = new ExportList();
-        e.exportToExcel(regView, "firstfile");
-        initSuccessMessage("Current list exported to excel");
+    protected File locateFile(ActionEvent event) {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Open File");
+        return chooser.showSaveDialog(new Stage());
     }
 
     private void setCurrentListData() {
