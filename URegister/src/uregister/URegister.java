@@ -11,6 +11,7 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
@@ -18,17 +19,17 @@ import javafx.stage.Stage;
  * @author David
  */
 public class URegister extends Application {
-    
+
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
-        
-        Scene scene = new Scene(root);
-        
+        FXMLDocumentController c = new FXMLDocumentController();
+        FXMLLoader l = new FXMLLoader(getClass().getResource("FXMLDocument.fxml"));
+        Pane p = (Pane) l.load();
+        c = (FXMLDocumentController) l.getController();
+        Scene scene = new Scene(p);
+        c.setStage(stage);
         stage.setScene(scene);
         stage.show();
-        
-        RegistrationMgr regMgr = new RegistrationMgr();
     }
 
     /**
@@ -37,5 +38,5 @@ public class URegister extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-    
+
 }
