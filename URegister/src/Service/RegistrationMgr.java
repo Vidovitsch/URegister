@@ -10,9 +10,7 @@ import Database.RegistrationDAO;
 import Database.RegistrationDAOJPAImpl;
 import Model.Registration;
 import java.sql.Date;
-import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
@@ -20,7 +18,6 @@ import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import uregister.FXMLDocumentController;
 
 
 /**
