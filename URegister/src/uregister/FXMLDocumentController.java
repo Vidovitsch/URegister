@@ -437,11 +437,12 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private void CreateNewRegistration(ActionEvent event) {
         Registration newRegistration = new Registration();
+        newRegistration.setDate(java.sql.Date.valueOf(DatePickerSelectedRegistrationDate.getValue()));
         newRegistration.setContent(TextAreaSelectedRegistrationDescription.getText());
         newRegistration.setStart(java.sql.Time.valueOf(TextFieldSelectedRegistrationStartTime.getText()));
         newRegistration.setEnd(java.sql.Time.valueOf(TextFieldSelectedRegistrationEndTime.getText()));
         newRegistration.setWorkedTime(java.sql.Time.valueOf(TextFieldSelectedRegistrationWorkedTime.getText()));
-        regMgr.createRegistration(selectedRegistration);
+        regMgr.createRegistration(newRegistration);
         initSuccessMessage("Registration created");
         resetRegistrationsList();
         clearSelectedRegistration();
