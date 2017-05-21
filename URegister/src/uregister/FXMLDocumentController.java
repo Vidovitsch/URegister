@@ -67,7 +67,7 @@ public class FXMLDocumentController implements Initializable {
     private ListView ListViewRegistrations;
 
     @FXML
-    private Label LabelElapsedTime;
+    private Label LabelElapsedTime, lblTotalLoan, lblTotalHours;
 
     @FXML
     private ComboBox ComboBoxMonthFilter, ComboBoxYearFilter;
@@ -228,45 +228,11 @@ public class FXMLDocumentController implements Initializable {
         LabelElapsedTime.setText("Elapsed time: " + timerText);
     }
 
-    public void fillList(ListView listview, List<Registration> stringlist) {
-        listview.getItems().clear();
-        ObservableList<Registration> doList = FXCollections.observableArrayList(stringlist);
-        listview.getItems().addAll(doList);
-    }
-
     public void removeItemFromList(ListView listview, Object item) {
         listview.getItems().remove(item);
     }
-
-    public void useYearFilter(String year) {
-        regView = new ArrayList<>();
-        for (Registration r : allRegistrations) {
-            System.out.println("Registration in allregistrations equals");
-            System.out.println(year);
-            System.out.println(r.getDate().getYear());
-
-            if (r.getDate().getYear() == Integer.parseInt(year)) {
-                System.out.println("year equals");
-                regView.add(r);
-            }
-        }
-        fillList(ListViewRegistrations, regView);
-    }
-
-    public void useMonthFilter(String month) throws ParseException {
-        Date date;
-        date = new SimpleDateFormat("MMMM").parse(month);
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(date);
-        int monthInt = cal.get(Calendar.MONTH);
-        //TODO filter registrationobject based on monthfilter
-    }
-
-    public void useDateFilter(LocalDate date) {
-        fHandler.filterOnDate(ListViewRegistrations, date.toString());
-    }
     
-     public void addItemToList(ListView listview, Object item) {
+    public void addItemToList(ListView listview, Object item) {
         listview.getItems().add(item);
     }
 
@@ -306,6 +272,7 @@ public class FXMLDocumentController implements Initializable {
                 String month = (String) ComboBoxMonthFilter.getSelectionModel().getSelectedItem();
                 int index = ComboBoxMonthFilter.getItems().indexOf(month);
                 fHandler.filterOnMonthYear(ListViewRegistrations, newValue, index);
+                setTotalFields(fHandler.getTotalValues());
             }
         });
 
@@ -321,12 +288,14 @@ public class FXMLDocumentController implements Initializable {
                 int index = ComboBoxMonthFilter.getItems().indexOf(newValue);
                 String year = (String) ComboBoxYearFilter.getSelectionModel().getSelectedItem();
                 fHandler.filterOnMonthYear(ListViewRegistrations, year, index);
+                setTotalFields(fHandler.getTotalValues());
             }
         });
 
         DatePickerDayFilter.valueProperty().addListener((ov, oldValue, newValue)
                 -> {
-            useDateFilter(newValue);
+            fHandler.filterOnDate(ListViewRegistrations, newValue.toString());
+            setTotalFields(fHandler.getTotalValues());
         });
 
         DatePickerFromDayFilter.valueProperty().addListener((ov, oldValue, newValue)
@@ -378,8 +347,9 @@ public class FXMLDocumentController implements Initializable {
     private void resetRegistrationsList() {
         RegistrationMgr r = new RegistrationMgr();
         allRegistrations = r.findAll();
-        fillList(ListViewRegistrations, allRegistrations);
         fHandler = new FilterHandler(allRegistrations);
+        fHandler.fillList(ListViewRegistrations, allRegistrations);
+        setTotalFields(fHandler.getTotalValues());
     }
 
     private void showPopup() {
@@ -466,5 +436,10 @@ public class FXMLDocumentController implements Initializable {
         if (salary != null) {
             TextFieldSalary.setText(salary);
         }
+    }
+    
+    private void setTotalFields(String[] totalValues) {
+        lblTotalHours.setText("Total hours: " + totalValues[0]);
+        lblTotalLoan.setText("Total loan (bruto): €" + totalValues[1]);
     }
 }

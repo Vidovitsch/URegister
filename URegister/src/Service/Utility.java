@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Service;
 
 import java.io.File;
@@ -17,11 +11,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-/**
- *
- * @author David
- */
 public class Utility {
 
     private final String fileName = "config.properties";
@@ -67,7 +56,7 @@ public class Utility {
         return props.getProperty("Salary");
     }
         
-    private void checkForProperties() {
+    public void checkForProperties() {
         File file = new File(fileName);
         if (!file.exists()) {
             try {
@@ -76,5 +65,72 @@ public class Utility {
                 Logger.getLogger(Utility.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    public String getTotalLoan(String totalTime, String salary) {
+        if (totalTime == null || salary == null) {
+            return null;
+        } else {
+            String[] tValues = totalTime.split(":");
+            double hours = Integer.valueOf(tValues[0]);
+            double minutes = Integer.valueOf(tValues[1]);
+            double seconds = Integer.valueOf(tValues[2]);
+            double s = Double.valueOf(salary);
+            
+            double m = (minutes * 60 + seconds) / 3600;
+            
+            double loan = (hours + m) * s;
+
+            String l = String.valueOf(loan);
+            String result = l.substring(0, l.indexOf(".") + 3);
+                
+            return result;
+        }
+    }
+    
+    public String getTotalTime(String totalTime, String added) {
+        if (totalTime == null) {
+            return added;
+        } else {
+            System.out.println("Total Time: " + totalTime);
+            int hours;
+            int minutes;
+            int seconds;
+            String[] tValues = totalTime.split(":");
+            String[] aValues = added.split(":");
+
+            hours = Integer.valueOf(tValues[0]) + Integer.valueOf(aValues[0]);
+            minutes = Integer.valueOf(tValues[1]) + Integer.valueOf(aValues[1]);
+            seconds = Integer.valueOf(tValues[2]) + Integer.valueOf(aValues[2]);
+            
+            while (seconds >= 60) {
+                minutes++;
+                seconds -= 60;
+            }
+            while (minutes >= 60) {
+                hours++;
+                minutes -= 60;
+            }
+
+            String time = String.valueOf(hours) + ":" + String.valueOf(minutes)
+                    + ":" + String.valueOf(seconds);
+            return formatTime(time);
+        }
+    }
+        
+    private String formatTime(String time) {
+        String[] tValues = time.split(":");
+        if (tValues[0].length() == 1) {
+            tValues[0] = "0" + tValues[0];
+        }
+        if (tValues[1].length() == 1) {
+            tValues[1] = "0" + tValues[1];
+        } 
+        if (tValues[2].length() == 1) {
+            tValues[2] = "0" + tValues[2];
+        }
+
+        time = tValues[0] + ":" + tValues[1] + ":" + tValues[2];
+        return time;
     }
 }

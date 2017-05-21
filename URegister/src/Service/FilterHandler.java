@@ -1,6 +1,7 @@
 package Service;
 
 import Model.Registration;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -10,9 +11,15 @@ import javafx.scene.control.ListView;
 public class FilterHandler {
     
     private List<Registration> allRegistrations;
+    private String[] totalValues;
     
     public FilterHandler(List<Registration> allRegistrations) {
         this.allRegistrations = allRegistrations;
+        this.totalValues = new String[2];
+    }
+    
+    public String[] getTotalValues() {
+        return this.totalValues;
     }
     
     public void filterOnMonthYear(ListView lv, String year, int monthIndex) {
@@ -65,7 +72,21 @@ public class FilterHandler {
         //ToDo
     }
     
-    private void fillList(ListView lv, List<Registration> registrations) {
+    private void calcTotalValues(List<Registration> filtered) {
+        String totalTime = null;
+        String salary = new RegistrationMgr().loadSalary();
+        for (Registration reg : filtered) {
+            totalTime = new Utility().getTotalTime(totalTime, reg.getWorkedTime().toString());
+        }
+        String totalLoan = new Utility().getTotalLoan(totalTime, salary);
+        
+        totalValues[0] = totalTime;
+        totalValues[1] = totalLoan;
+    }
+   
+    
+    public void fillList(ListView lv, List<Registration> registrations) {
+        calcTotalValues(registrations);
         lv.getItems().clear();
         ObservableList<Registration> doList = FXCollections.observableArrayList(registrations);
         lv.getItems().addAll(doList);
