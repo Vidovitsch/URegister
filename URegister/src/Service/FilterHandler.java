@@ -1,7 +1,7 @@
 package Service;
 
 import Model.Registration;
-import java.sql.Time;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.collections.FXCollections;
@@ -69,7 +69,10 @@ public class FilterHandler {
     }
     
     public void filterOnDateSpan(ListView lv, String startDate, String endDate) {
-        //ToDo
+        Date start = new Utility().stringToDate(startDate);
+        Date end = new Utility().stringToDate(endDate);
+        
+        fillList(lv, new RegistrationMgr().findByDateSpan(start, end));
     }
     
     private void calcTotalValues(List<Registration> filtered) {

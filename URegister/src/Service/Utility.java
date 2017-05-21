@@ -15,16 +15,18 @@ public class Utility {
 
     private final String fileName = "config.properties";
     
+    public Date stringToDate(String date) {
+        String[] values = date.split("-");
+        int year = Integer.valueOf(values[0]) - 1900;
+        int month = Integer.valueOf(values[1]) - 1;
+        int day = Integer.valueOf(values[2]);
+        
+        return new Date(year, month, day);
+    }
+    
     public long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
         long diff = date2.getTime() - date1.getTime();
         return timeUnit.convert(diff, timeUnit);
-    }
-    
-    public Date addDayToDate(Date date) {
-        Calendar c = Calendar.getInstance(); 
-        c.setTime(date); 
-        c.add(Calendar.DATE, 1);
-        return (Date) c.getTime();
     }
     
     public void saveSalary(String salary) {
@@ -82,7 +84,12 @@ public class Utility {
             double loan = (hours + m) * s;
 
             String l = String.valueOf(loan);
-            String result = l.substring(0, l.indexOf(".") + 3);
+            String result;
+            if (l.length() > 4) {
+                result = l.substring(0, l.indexOf(".") + 3);
+            } else {
+                result = l;
+            }
                 
             return result;
         }

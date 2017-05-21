@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.TemporalType;
 import javax.persistence.criteria.CriteriaQuery;
 
 public class RegistrationDAOJPAImpl implements RegistrationDAO {
@@ -42,5 +43,13 @@ public class RegistrationDAOJPAImpl implements RegistrationDAO {
        CriteriaQuery cq = em.getCriteriaBuilder().createQuery();
         cq.select(cq.from(Registration.class));
         return em.createQuery(cq).getResultList();
+    }
+
+    @Override
+    public List<Registration> findByDateSpan(Date start, Date end) {
+        String query = "SELECT a FROM Registration AS a WHERE a.date >= '" + start + "' AND a.date <= '" + end + "'";
+        System.out.println(query);
+        Query q = em.createQuery(query);
+        return (List<Registration>) q.getResultList();
     }
 }

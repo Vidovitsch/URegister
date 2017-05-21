@@ -44,6 +44,8 @@ public interface RegistrationDAO {
      */
     List<Registration> findByDate(Date date);
     
+    List<Registration> findByDateSpan(Date start, Date end);
+    
     /**
      * Search for all Registrations currently in the database
      * @return a list of all entities

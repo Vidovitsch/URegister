@@ -59,6 +59,8 @@ public class FXMLDocumentController implements Initializable {
     private Registration selectedRegistration = null;
     private List<Registration> regView;
     private List<Registration> allRegistrations;
+    private String startDate = null;
+    private String endDate = null;
 
     @FXML
     private Pane PaneAddDescription;
@@ -385,14 +387,20 @@ public class FXMLDocumentController implements Initializable {
         updateElapsedTime(ElapsedText);
     }
 
-    
-
     private void setFromDay(LocalDate date) {
-        System.out.println(date);
+        startDate = date.toString();
+        if (endDate != null) {
+            fHandler.filterOnDateSpan(ListViewRegistrations, startDate, endDate);
+            setTotalFields(fHandler.getTotalValues());
+        }
     }
 
     private void setTillDay(LocalDate date) {
-        System.out.println(date);
+        endDate = date.toString();
+        if (startDate != null) {
+            fHandler.filterOnDateSpan(ListViewRegistrations, startDate, endDate);
+            setTotalFields(fHandler.getTotalValues());
+        }
     }
 
     private void setSelectedRegistration(Registration r) {
@@ -439,7 +447,15 @@ public class FXMLDocumentController implements Initializable {
     }
     
     private void setTotalFields(String[] totalValues) {
-        lblTotalHours.setText("Total hours: " + totalValues[0]);
-        lblTotalLoan.setText("Total loan (bruto): €" + totalValues[1]);
+        if (totalValues[0] == null) {
+            lblTotalHours.setText("Total hours: -");
+        } else {
+            lblTotalHours.setText("Total hours: " + totalValues[0]);
+        }
+        if (totalValues[1] == null) {
+            lblTotalLoan.setText("Total loan (bruto): -");
+        } else {
+            lblTotalLoan.setText("Total loan (bruto): €" + totalValues[1]);
+        }
     }
 }

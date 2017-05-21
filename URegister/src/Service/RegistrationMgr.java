@@ -100,12 +100,18 @@ public class RegistrationMgr {
     }
     
     public List<Registration> findByDateSpan(Date start, Date end) {
-        List<Registration> registrations = new ArrayList();
-        Date varDate = start;
-        long diff = new Utility().getDateDiff(start, end, TimeUnit.DAYS);
-        for (int i = 0; i < diff; i++) {
-            registrations.addAll(findBySingleDate(varDate));
-            varDate = new Utility().addDayToDate(varDate);
+        List<Registration> registrations = null;
+        EntityManager em = emf.createEntityManager();
+        regDAO = new RegistrationDAOJPAImpl(em);
+        em.getTransaction().begin();
+        try {
+            registrations = regDAO.findByDateSpan(start, end);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            Logger.getLogger(RegistrationMgr.class.getName()).log(Level.SEVERE, null, e);
+            em.getTransaction().rollback();
+        } finally {
+            em.close();
         }
         
         return registrations;
