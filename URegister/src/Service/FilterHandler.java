@@ -1,9 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package Service;
 
 import Model.Registration;
@@ -12,16 +6,9 @@ import java.util.List;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ListView;
-import uregister.FXMLDocumentController;
 
-
-/**
- *
- * @author David
- */
 public class FilterHandler {
-
-    private RegistrationMgr regMgr = new RegistrationMgr();
+    
     private List<Registration> allRegistrations;
     
     public FilterHandler(List<Registration> allRegistrations) {
@@ -75,7 +62,7 @@ public class FilterHandler {
     }
     
     public void filterOnDateSpan(ListView lv, String startDate, String endDate) {
-        
+        //ToDo
     }
     
     private void fillList(ListView lv, List<Registration> registrations) {
@@ -83,15 +70,4 @@ public class FilterHandler {
         ObservableList<Registration> doList = FXCollections.observableArrayList(registrations);
         lv.getItems().addAll(doList);
     }
-    
-//    private String[] removeZero(String[] v) {
-//        if (v[1].substring(0, 1).contains("0")) {
-//            v[1] = v[1].substring(1);
-//        }
-//        if (v[2].substring(0, 1).contains("0")) {
-//            v[2] = v[2].substring(1);
-//        }
-//        
-//        return v;
-//    }
 }

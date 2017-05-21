@@ -27,7 +27,6 @@ public class URegister extends Application {
         Pane p = (Pane) l.load();
         c = (FXMLDocumentController) l.getController();
         Scene scene = new Scene(p);
-        c.setStage(stage);
         stage.setScene(scene);
         stage.show();
     }

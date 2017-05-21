@@ -1,60 +1,46 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package Service;
 
 import Model.Registration;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-public class ExportList
-{
+
+
+public class ExportList {
 
     private List<Registration> list;
 
-    public ExportList()
-    {
-    }
+    public ExportList() { }
 
-    public void exportToExcel(List<Registration> rlist, String filename)
-    {
+    public void exportToExcel(List<Registration> rlist, String filename) {
         list = rlist;
         creatExcelFile(filename);
     }
 
-    private void creatExcelFile(String filename)
-    {
-        try
-        {
+    private void creatExcelFile(String filename) {
+        try {
             XSSFWorkbook workbook = new XSSFWorkbook();
             XSSFSheet sheet = workbook.createSheet("URegister-Data");// creating a blank sheet
             int rownum = 1;
             setHeaders(sheet.createRow(0));
-            for (Registration registration : list)
-            {
+            for (Registration registration : list) {
                 Row row = sheet.createRow(rownum++);
                 createList(registration, row);
             }
             FileOutputStream out = new FileOutputStream(new File(filename + ".xlsx")); // file name with path
             workbook.write(out);
             out.close();
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void setHeaders(Row r)
-    {
+    private void setHeaders(Row r) {
         Cell cell = r.createCell(0);
         cell.setCellValue("Datum");
         cell = r.createCell(1);
@@ -66,9 +52,9 @@ public class ExportList
         cell = r.createCell(4);
         cell.setCellValue("Verantwoording");
     }
-    
-    private void createList(Registration registration, Row row) // creating cells for each row
-    {
+
+    //Creating cells for each row
+    private void createList(Registration registration, Row row) {
         Cell cell = row.createCell(0);
         cell.setCellValue(registration.getDate().toString());
         cell = row.createCell(1);
