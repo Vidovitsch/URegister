@@ -22,6 +22,7 @@ import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,6 +36,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
@@ -63,7 +65,7 @@ public class FXMLDocumentController implements Initializable {
     private String endDate = null;
 
     @FXML
-    private Pane PaneAddDescription;
+    private Pane PaneAddDescription, panePopUp;
 
     @FXML
     private ListView ListViewRegistrations;
@@ -83,14 +85,14 @@ public class FXMLDocumentController implements Initializable {
         TextFieldSelectedRegistrationStartTime, TextFieldSalary;
 
     @FXML
-    private TextArea TextAreaSelectedRegistrationDescription, textAreaNewRegistrationDescription;
+    private TextArea TextAreaSelectedRegistrationDescription, textAreaNewRegistrationDescription, 
+            TextAreaSelectedRegistrationDescription2;
 
     @FXML
     private Button ButtonUpdateSelectedRegistration,
         ButtonDeleteSelectedRegistration, ButtonPauseResume,
         ButtonExportCurrentList, ButtonUpdateSalary, buttonSubmitNewRegistration,
         ButtonFinishWork, ButtonStartWork, ButtonCreateNewRegistration;
-
 
     @FXML
     private void handleExportCurrentListButton(ActionEvent event) {
@@ -194,6 +196,8 @@ public class FXMLDocumentController implements Initializable {
         initSuccessMessage("Registration updated");
         resetRegistrationsList();
         clearSelectedRegistration();
+        
+        panePopUp.setVisible(false);
     }
 
     @FXML
@@ -208,6 +212,8 @@ public class FXMLDocumentController implements Initializable {
         initSuccessMessage("Registration created");
         resetRegistrationsList();
         clearSelectedRegistration();
+        
+        panePopUp.setVisible(false);
     }
     
     @FXML
@@ -217,11 +223,19 @@ public class FXMLDocumentController implements Initializable {
             regMgr.remove(selectedRegistration);
             clearSelectedRegistration();
             resetRegistrationsList();
+            
+            panePopUp.setVisible(false);
         }
+    }
+    
+    @FXML
+    private void closeInfoPopUp(ActionEvent event) {
+        panePopUp.setVisible(false);
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        panePopUp.setVisible(false);
         setSalaryField();
         setEventHandlers();
     }
@@ -314,6 +328,15 @@ public class FXMLDocumentController implements Initializable {
                 -> {
             Registration r = (Registration) ListViewRegistrations.getSelectionModel().getSelectedItem();
             setSelectedRegistration(r);
+            if (event.getClickCount() == 2) {
+                panePopUp.setVisible(true);
+            }
+        });
+        ListViewRegistrations.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Registration>() {
+            @Override
+            public void changed(ObservableValue<? extends Registration> observable, Registration oldValue, Registration newValue) {
+                panePopUp.setVisible(false);
+            }
         });
     }
 
@@ -410,6 +433,7 @@ public class FXMLDocumentController implements Initializable {
             TextFieldSelectedRegistrationStartTime.setText(r.getStart().toString());
             TextFieldSelectedRegistrationWorkedTime.setText(r.getWorkedTime().toString());
             TextAreaSelectedRegistrationDescription.setText(r.getContent());
+            TextAreaSelectedRegistrationDescription2.setText(r.getContent());
             selectedRegistration = r;
             ButtonUpdateSelectedRegistration.setDisable(false);
             ButtonDeleteSelectedRegistration.setDisable(false);
@@ -425,6 +449,7 @@ public class FXMLDocumentController implements Initializable {
         TextFieldSelectedRegistrationStartTime.clear();
         TextFieldSelectedRegistrationWorkedTime.clear();
         TextAreaSelectedRegistrationDescription.clear();
+        TextAreaSelectedRegistrationDescription2.clear();
         ButtonUpdateSelectedRegistration.setDisable(true);
         ButtonDeleteSelectedRegistration.setDisable(true);
     }
@@ -435,6 +460,7 @@ public class FXMLDocumentController implements Initializable {
         TextFieldSelectedRegistrationStartTime.setText("00:00:00");
         TextFieldSelectedRegistrationWorkedTime.setText("00:00:00");
         TextAreaSelectedRegistrationDescription.clear();
+        TextAreaSelectedRegistrationDescription2.clear();
         ButtonUpdateSelectedRegistration.setDisable(true);
         ButtonDeleteSelectedRegistration.setDisable(true);
     }
