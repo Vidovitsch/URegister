@@ -23,9 +23,9 @@
       <DatePicker fx:id="DatePickerFromDayFilter" layoutX="85.0" layoutY="495.0" prefHeight="25.0" prefWidth="154.0" />
       <Label fx:id="LabelRegistrationsDate1" layoutX="23.0" layoutY="499.0" text="Date Span" />
       <ComboBox fx:id="ComboBoxMonthFilter" layoutX="237.0" layoutY="400.0" prefHeight="25.0" prefWidth="120.0" />
-      <ComboBox fx:id="ComboBoxYearFilter" layoutX="51.0" layoutY="400.0" prefHeight="25.0" prefWidth="128.0" />
+      <ComboBox fx:id="ComboBoxYearFilter" layoutX="47.0" layoutY="400.0" prefHeight="25.0" prefWidth="128.0" />
       <Label layoutX="19.0" layoutY="404.0" text="Year" />
-      <Label layoutX="190.0" layoutY="404.0" text="Month" />
+      <Label layoutX="196.0" layoutY="404.0" text="Month" />
       <Label fx:id="LabelFilters" layoutX="17.0" layoutY="371.0" text="Filters">
          <font>
             <Font size="18.0" />

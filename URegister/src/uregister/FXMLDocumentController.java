@@ -279,32 +279,52 @@ public class FXMLDocumentController implements Initializable {
     }
     
     private void setEventHandlers() {
-        ComboBoxYearFilter.getItems().addAll("2017", "2016", "2015", "2014", "2013");
-        ComboBoxYearFilter.setPromptText("year");
-        ComboBoxYearFilter.setEditable(false);
+        ComboBoxYearFilter.getItems().addAll("All", "2018", "2017", "2016", "2015", "2014", "2013");
+        ComboBoxYearFilter.getSelectionModel().select(0);
         ComboBoxYearFilter.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 String month = (String) ComboBoxMonthFilter.getSelectionModel().getSelectedItem();
                 int index = ComboBoxMonthFilter.getItems().indexOf(month);
-                fHandler.filterOnMonthYear(ListViewRegistrations, newValue, index);
-                setTotalFields(fHandler.getTotalValues());
+                if (month.equals("All") && index == 0) {
+                    fHandler.fillList(ListViewRegistrations, allRegistrations);
+                } else {
+                    if (index == 0) {
+                        fHandler.filterOnMonthYear(ListViewRegistrations, newValue, -1);
+                    } else if (newValue.equals("All")) {
+                        fHandler.filterOnMonthYear(ListViewRegistrations, null, index);
+                    } else {
+                        fHandler.filterOnMonthYear(ListViewRegistrations, newValue, index);
+                        setTotalFields(fHandler.getTotalValues());
+                    }
+                }
             }
         });
 
         String[] months = new DateFormatSymbols().getMonths();
+        ComboBoxMonthFilter.getItems().add("All");
         for (int i = 0; i < months.length; i++) {
             ComboBoxMonthFilter.getItems().add(months[i]);
         }
-        ComboBoxMonthFilter.setPromptText("month");
+        ComboBoxMonthFilter.getSelectionModel().select(0);
         ComboBoxMonthFilter.setEditable(false);
         ComboBoxMonthFilter.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 int index = ComboBoxMonthFilter.getItems().indexOf(newValue);
                 String year = (String) ComboBoxYearFilter.getSelectionModel().getSelectedItem();
-                fHandler.filterOnMonthYear(ListViewRegistrations, year, index);
-                setTotalFields(fHandler.getTotalValues());
+                if (year.equals("All") && index == 0) {
+                    fHandler.fillList(ListViewRegistrations, allRegistrations);
+                } else {
+                    if (year.equals("All")) {
+                        fHandler.filterOnMonthYear(ListViewRegistrations, null, index);
+                    } else if (newValue.equals("All")) {
+                        fHandler.filterOnMonthYear(ListViewRegistrations, year, -1);
+                    } else {
+                        fHandler.filterOnMonthYear(ListViewRegistrations, year, index);
+                        setTotalFields(fHandler.getTotalValues());
+                    }
+                }
             }
         });
 

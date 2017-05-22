@@ -26,7 +26,7 @@ public class FilterHandler {
         List<Registration> filtered = new ArrayList();
         if (year == null) {
             for (Registration reg : allRegistrations) {
-                int mIndex = reg.getDate().getMonth();
+                int mIndex = reg.getDate().getMonth() + 1;
                 if (mIndex == monthIndex) {
                     filtered.add(reg);
                 }
@@ -47,7 +47,7 @@ public class FilterHandler {
                 }
             }
             for (Registration reg : extraFiltered) {
-                int mIndex = reg.getDate().getMonth();
+                int mIndex = reg.getDate().getMonth() + 1;
                 if (mIndex == monthIndex) {
                     filtered.add(reg);
                 }
