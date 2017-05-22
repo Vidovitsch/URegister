@@ -286,10 +286,10 @@ public class FXMLDocumentController implements Initializable {
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 String month = (String) ComboBoxMonthFilter.getSelectionModel().getSelectedItem();
                 int index = ComboBoxMonthFilter.getItems().indexOf(month);
-                if (month.equals("All") && index == 0) {
+                if (newValue.equals("All") && index == 0) {
                     fHandler.fillList(ListViewRegistrations, allRegistrations);
                 } else {
-                    if (index == 0) {
+                    if (month.equals("All")) {
                         fHandler.filterOnMonthYear(ListViewRegistrations, newValue, -1);
                     } else if (newValue.equals("All")) {
                         fHandler.filterOnMonthYear(ListViewRegistrations, null, index);
