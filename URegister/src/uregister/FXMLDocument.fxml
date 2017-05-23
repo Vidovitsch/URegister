@@ -65,11 +65,9 @@
       </Label>
       <Pane fx:id="panePopUp" layoutX="299.0" layoutY="107.0" prefHeight="330.0" prefWidth="241.0" style="-fx-background-color: darkgrey;">
          <children>
-            <Button fx:id="ButtonCreateNewRegistration" layoutX="87.0" layoutY="291.0" mnemonicParsing="false" onAction="#CreateNewRegistration" prefHeight="25.0" prefWidth="71.0" text="Create" />
             <Label layoutX="11.0" layoutY="170.0" text="Worked" />
             <TextField fx:id="TextFieldSelectedRegistrationWorkedTime" layoutX="62.0" layoutY="166.0" prefHeight="25.0" prefWidth="173.0" />
-            <Button fx:id="ButtonUpdateSelectedRegistration" layoutX="8.0" layoutY="291.0" mnemonicParsing="false" onAction="#updateRegistration" prefHeight="25.0" prefWidth="71.0" text="Update" />
-            <Button fx:id="ButtonDeleteSelectedRegistration" layoutX="165.0" layoutY="291.0" mnemonicParsing="false" onAction="#deleteRegistration" prefHeight="25.0" prefWidth="71.0" text="Delete" />
+            <Button fx:id="ButtonUpdateSelectedRegistration" layoutX="8.0" layoutY="291.0" mnemonicParsing="false" onAction="#updateRegistration" prefHeight="25.0" prefWidth="228.0" text="Update" />
             <TextArea fx:id="TextAreaSelectedRegistrationDescription" layoutX="8.0" layoutY="198.0" prefHeight="86.0" prefWidth="228.0" wrapText="true" />
             <DatePicker fx:id="DatePickerSelectedRegistrationDate" editable="false" layoutX="6.0" layoutY="66.0" onAction="#handleSelectedRegistrationDateChanged" prefHeight="25.0" prefWidth="228.0" />
             <TextField fx:id="TextFieldSelectedRegistrationStartTime" layoutX="62.0" layoutY="103.0" prefHeight="25.0" prefWidth="173.0" />
@@ -82,9 +80,12 @@
                </font>
             </Label>
             <Button fx:id="btnClose" layoutX="181.0" layoutY="2.0" mnemonicParsing="false" onAction="#closeInfoPopUp" prefHeight="25.0" prefWidth="55.0" text="Close" />
+            <Button fx:id="ButtonCreateNewRegistration" layoutX="8.0" layoutY="291.0" mnemonicParsing="false" onAction="#CreateNewRegistration" prefHeight="25.0" prefWidth="228.0" text="Create" />
          </children>
       </Pane>
       <Label fx:id="LabelRegistrationsDate2" layoutX="17.0" layoutY="464.0" text="Single Date" />
       <Line endX="720.0" layoutX="109.0" layoutY="445.0" startX="-100.0" />
+      <Button fx:id="ButtonDeleteSelectedRegistration" layoutX="598.0" layoutY="413.0" mnemonicParsing="false" onAction="#deleteRegistration" prefHeight="25.0" prefWidth="105.0" text="Delete" />
+      <Button fx:id="btnCreatePopUp" layoutX="720.0" layoutY="413.0" mnemonicParsing="false" onAction="#createPopUp" prefHeight="25.0" prefWidth="105.0" text="Create" />
    </children>
 </Pane>
