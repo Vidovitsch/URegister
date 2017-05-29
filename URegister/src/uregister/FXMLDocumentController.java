@@ -7,7 +7,6 @@ import Service.RegistrationMgr;
 import java.io.File;
 import java.net.URL;
 import java.text.DateFormatSymbols;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,9 +20,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -36,7 +32,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.FileChooser;
@@ -90,7 +85,7 @@ public class FXMLDocumentController implements Initializable {
 
     @FXML
     private Button ButtonUpdateSelectedRegistration,
-        ButtonDeleteSelectedRegistration, ButtonPauseResume,
+        ButtonDeleteSelectedRegistration, ButtonPauseResume, btnCreatePopUp,
         ButtonExportCurrentList, ButtonUpdateSalary, buttonSubmitNewRegistration,
         ButtonFinishWork, ButtonStartWork, ButtonCreateNewRegistration;
 
@@ -233,6 +228,11 @@ public class FXMLDocumentController implements Initializable {
         panePopUp.setVisible(false);
     }
     
+    @FXML
+    private void createPopUp(ActionEvent evebt) {
+        showCreatePopUp();
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         panePopUp.setVisible(false);
@@ -349,7 +349,7 @@ public class FXMLDocumentController implements Initializable {
             Registration r = (Registration) ListViewRegistrations.getSelectionModel().getSelectedItem();
             setSelectedRegistration(r);
             if (event.getClickCount() == 2) {
-                panePopUp.setVisible(true);
+                showUpdatePopUp();
             }
         });
         ListViewRegistrations.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Registration>() {
@@ -503,5 +503,23 @@ public class FXMLDocumentController implements Initializable {
         } else {
             lblTotalLoan.setText("Total loan (bruto): €" + totalValues[1]);
         }
+    }
+    
+    private void showUpdatePopUp() {
+        ButtonCreateNewRegistration.setVisible(false);
+        ButtonUpdateSelectedRegistration.setVisible(true);
+        panePopUp.setVisible(true);
+    }
+    
+    private void showCreatePopUp() {
+        ButtonCreateNewRegistration.setVisible(true);
+        ButtonUpdateSelectedRegistration.setVisible(false);
+        panePopUp.setVisible(true);
+        
+        TextFieldSelectedRegistrationWorkedTime.setText(null);
+        TextFieldSelectedRegistrationEndTime.setText(null);
+        TextFieldSelectedRegistrationStartTime.setText(null);
+        TextAreaSelectedRegistrationDescription.setText(null);
+        DatePickerSelectedRegistrationDate.setValue(null);
     }
 }
